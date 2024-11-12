@@ -64,8 +64,8 @@ public class Station {
 				capitalizeFirstLetter(exit.getKey()) + " " +
 				capitalizeFirstLetter(exit.getValue()) + " line,";
     }
-    
-    return returnString.substring(0, returnString.length() - 1);
+
+    return returnString.substring(0, returnString.length() - 1) + ".";
   }
 
   /**

@@ -10,8 +10,6 @@ import java.util.Stack;
 public class Tube {
   private Stack<Station> backStack;
   private ArrayList<Station> stations;
-  private String randomStation = "bank";
-  private String randomLine = "waterloo&city";
   
   public Tube() {
     stations = new ArrayList<Station>();
@@ -36,6 +34,7 @@ public class Tube {
     stations.add(new Station("You are currently at Waterloo station.", "Waterloo"));
     stations.add(new Station("You are currently at Southwark station.", "Soutwark"));
     stations.add(new Station("You are currently at London Bridge station.", "London Bridge"));
+    stations.add(new Station("You are now being transported to a random station on the tube.", "Random"));
     
     stations.get(0).setExit("Southbound", "Bakerloo", stations.get(1));
     stations.get(1).setExit("Northbound", "Bakerloo", stations.get(0));
@@ -85,6 +84,8 @@ public class Tube {
     stations.get(12).setExit("Northbound", "Northern", stations.get(9));
     stations.get(9).setExit("Southbound", "Northern", stations.get(12));
 
+    stations.get(9).setExit("Random", "Waterloo&City", stations.get(13));
+
     backStack.push(stations.get(1)); // start the game at Piccadilly Circuis
   }
   
@@ -116,35 +117,27 @@ public class Tube {
   }
 
   public void processTakeCommand(Command command) {
-    if (!command.hasIndex(1)) { // if there is no second word, we don't know where to go
+    if (!command.hasIndex(1) || !command.hasIndex(2)) { // if there is no second or third word
       printIncorrectFormat();
       return;
     }
 
     String word2 = command.getWord(1);
-    Station nextStation;
-    
-    if (!command.hasIndex(2)) { // if there is only a second word, that word is considered as a line
-      // if the current station is not the randomStation or the line is not the randomLine, incorrect format was entered.
-      if (!getCurrentStation().getName().toLowerCase().equals(randomStation) || !word2.toLowerCase().equals(randomLine)) {
-        printIncorrectFormat();
-        return;
-      }
+    String word3 = command.getWord(2);
 
-      int randomIndex = (int) (Math.random() * stations.size());
+    // trying to leave current station
+    Station nextStation = getCurrentStation().getExit(word2, word3);
+
+    if (nextStation == null) {
+      System.out.println("You cannot take " +
+      capitalizeFirstLetter(word2) + " " +
+      capitalizeFirstLetter(word3) + " line.");
+      return;
+    }
+
+    if (nextStation.getName().equals("Random")) {
+      int randomIndex = (int) (Math.random() * (stations.size() - 1));
       nextStation = stations.get(randomIndex);
-    } else {
-      String word3 = command.getWord(2);
-
-      // trying to leave current station
-      nextStation = getCurrentStation().getExit(word2, word3);
-
-      if (nextStation == null) {
-        System.out.println("You cannot take " +
-        capitalizeFirstLetter(word2) + " " +
-        capitalizeFirstLetter(word3) + " line.");
-        return;
-      }
     }
 
     backStack.push(nextStation);
@@ -152,12 +145,7 @@ public class Tube {
   }
 
   public String getCurrentExits() {
-    String str = getCurrentStation().getDescription();
-    if (!getCurrentStation().getName().toLowerCase().equals(randomStation)) {
-      return str + ".";
-    }
-    str += ",\n  Waterloo&City line to a random station on the tube.";
-    return str;
+    return getCurrentStation().getDescription();
   }
   
   /**
