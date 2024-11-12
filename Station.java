@@ -22,10 +22,10 @@ public class Station {
   private HashMap<Entry<String, String>, Station> exits; // stores exits of this room
 
   /**
-   * Create a room described "description". Initially, it has
-   * no exits. "description" is something like "a kitchen" or
-   * "an open court yard".
-   * @param description The room's description.
+   * Create a station described as "description" with name as "name". Initially, it has
+   * no exits.
+   * @param description The station's description.
+   * @param name The station's name, like London Bridge.
    */
   public Station(String description, String name) {
     this.description = description;
@@ -34,45 +34,37 @@ public class Station {
   }
 
   /**
-   * Define an exit from this room.
+   * Define an exit from this station.
    * @param direction The direction of the exit.
-   * @param neighbor  The room to which the exit leads.
+   * @param line The line taking the direction.
+   * @param neighbor The station to which the exit leads.
    */
   public void setExit(String direction, String line, Station neighbor) {
     exits.put(new SimpleEntry<>(direction.toLowerCase(), line.toLowerCase()), neighbor);
   }
 
   /**
-   * @return The short description of the room
-   * (the one that was defined in the constructor).
+   * Return a description of the station with its exits.
+   * @return A long description of this station.
    */
-  public String getShortDescription() {
-    return "You are in " + name + ".";
-  }
-
-  /**
-   * Return a description of the room in the form:
-   *   You are in the kitchen.
-   *   Exits: north west
-   * @return A long description of this room
-   */
-  public String getLongDescription() {
+  public String getDescription() {
     return description + "\n" + getExitString();
   }
 
   /**
-   * Return a string describing the room's exits, for example
-   * "Exits: north west".
-   * @return Details of the room's exits.
+   * Return a string describing the stations's exits.
+   * @return Details of the station's exits.
    */
   private String getExitString() {
 		// add lines one can take
     String returnString = "You can take the following lines:";
+
     for (Entry<String, String> exit : exits.keySet()) {
       returnString += "\n  " +
 				capitalizeFirstLetter(exit.getKey()) + " " +
 				capitalizeFirstLetter(exit.getValue()) + " line,";
     }
+    
     return returnString.substring(0, returnString.length() - 1);
   }
 

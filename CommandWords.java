@@ -31,8 +31,15 @@ public class CommandWords {
    * @return true if it is, false if it isn't.
    */
   public boolean isCommand(String command) {
-    String description = validCommands.get(command);
-    return description != null;
+    return validCommands.get(command) != null;
+  }
+
+  /**
+   * Get a given command's description. Returns null if the command doesn't exist.
+   * @return The description of the command or null.
+   */
+  public String getCommandDescription(String command) {
+    return validCommands.get(command);
   }
 
   /**
@@ -43,9 +50,5 @@ public class CommandWords {
       System.out.print(command + "  ");
     }
     System.out.println();
-  }
-
-  public String getCommandDescription(String command) {
-    return validCommands.get(command);
   }
 }

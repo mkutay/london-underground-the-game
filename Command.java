@@ -23,64 +23,32 @@ public class Command {
   ArrayList<String> words;
 
   /**
-   * Create a command object. First and second word must be supplied, but
-   * either one (or both) can be null.
-   * @param firstWord The first word of the command. Null if the command
-   *          was not recognised.
-   * @param secondWord The second word of the command.
+   * Create a command object by the given words taken from the parser.
+   * @param words 
    */
   public Command(ArrayList<String> words) {
     this.words = words;
   }
 
   /**
-   * Return the command word (the first word) of this command. If the
-   * command was not understood, the result is null.
-   * @return The command word.
+   * @return If the command has a given index, return true, false otherwise.
    */
-  public String getCommandWord() {
-    return doesIndexExist(0) ? words.get(0) : null;
+  public boolean hasIndex(int index) {
+    return index < words.size();
   }
 
   /**
-   * @return The second word of this command. Returns null if there was no
-   * second word.
+   * @return The word of the command at a certain index.
    */
-  public String getSecondWord() {
-    return doesIndexExist(1) ? words.get(1) : null;
+  public String getWord(int index) {
+    return hasIndex(index) ? words.get(index) : null;
   }
 
   /**
    * @return true if this command was not understood.
    */
   public boolean isUnknown() {
-    return !doesIndexExist(0);
-  }
-
-  /**
-   * @return true if the command has a second word.
-   */
-  public boolean hasSecondWord() {
-    return doesIndexExist(1);
-  }
-
-  /**
-   * @return The third word of this command. Returns null if there was no
-   * third word.
-   */
-  public String getThirdWord() {
-    return doesIndexExist(2) ? words.get(2) : null;
-  }
-
-  /**
-   * @return true if the command has a third word.
-   */
-  public boolean hasThirdWord() {
-    return doesIndexExist(2);
-  }
-
-  private boolean doesIndexExist(int index) {
-    return index < words.size();
+    return !hasIndex(0) || words.get(0) == null;
   }
 }
 

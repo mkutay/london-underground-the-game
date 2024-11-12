@@ -17,8 +17,7 @@ import java.util.Scanner;
  * @author  Michael Kölling and David J. Barnes
  * @version 2016.02.29
  */
-public class Parser 
-{
+public class Parser  {
   private CommandWords commands; // holds all valid command words
   private Scanner reader; // source of command input
 
@@ -37,22 +36,18 @@ public class Parser
     String inputLine; // will hold the full input line
     ArrayList<String> words = new ArrayList<>();
 
-    System.out.print("> "); // print prompt
+    System.out.print("\n> "); // print prompt
 
     inputLine = reader.nextLine();
 
-    // find up to two words on the line
+    // find up each word from the line
     try (Scanner tokenizer = new Scanner(inputLine)) {
-      if (tokenizer.hasNext()) {
-        words.add(tokenizer.next()); // get first word
-        if (tokenizer.hasNext()) {
-          words.add(tokenizer.next()); // get second word
-          if (tokenizer.hasNext()) {
-            words.add(tokenizer.next()); // get third word
-          }
-        }
+      while (tokenizer.hasNext()) {
+        words.add(tokenizer.next()); // get the next word
       }
     }
+
+    if (words.size() == 0) return null;
 
     // Now check whether this word is known. If so, create a command
     // with it. If not, create a "null" command (for unknown command).

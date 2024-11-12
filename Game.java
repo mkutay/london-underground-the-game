@@ -33,7 +33,7 @@ public class Game {
   public void play() {
     printWelcome();
 
-    // Enter the main command loop.  Here we repeatedly read commands and
+    // Enter the main command loop. Here we repeatedly read commands and
     // execute them until the game is over.
 
     boolean finished = false;
@@ -51,52 +51,52 @@ public class Game {
    */
   private void printWelcome() {
     System.out.println();
-    System.out.println("Welcome to the World of Zuul!");
-    System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-    System.out.println("Type 'help' if you need help.");
+    System.out.println("Welcome to the London Underground!");
+    System.out.println("This is a game where you are lost in the London tube without your Oyster card.");
+    System.out.println("You should find it before you leaving the stations.");
+    System.out.println("Type \"help\" if you need help.");
     System.out.println();
     System.out.println(theTube.getCurrentExits());
   }
 
   /**
-   * Given a command, process (that is: execute) the command.
+   * Given a command, process the command.
    * @param command The command to be processed.
-   * @return true If the command ends the game, false otherwise.
+   * @return true if the command ends the game, false otherwise.
    */
   private boolean processCommand(Command command) {
-    boolean wantToQuit = false;
-
-    if (command.isUnknown()) {
-      System.out.println("I don't know what you mean...");
+    if (command == null || command.isUnknown()) {
+      System.out.println("I don't know what you mean. Try typing \"help\" for more information.");
       return false;
     }
 
-    String commandWord = command.getCommandWord();
+    boolean wantToQuit = false;
+    String commandWord = command.getWord(0);
+
     if (commandWord.equals("help")) {
       printHelp(command);
     } else if (commandWord.equals("go")) {
-      theTube.goStation(command);
+      theTube.processGoCommand(command);
     } else if (commandWord.equals("take")) {
-      theTube.takeLine(command);
+      theTube.processTakeCommand(command);
     } else if (commandWord.equals("quit")) {
       wantToQuit = quit(command);
     }
     
-    // else command not recognised.
     return wantToQuit;
   }
 
-  // implementations of user commands:
-
   /**
-   * Print out some help information.
-   * Here we print some stupid, cryptic message and a list of the 
-   * command words.
+   * Print out some help information. If the player types "help"
+   * followed by a command, it will print out the description of that command.
+   * @param command The help command to be processed
    */
   private void printHelp(Command command) {
-    if (command.hasSecondWord()) {
-      String word = command.getSecondWord();
+    if (command.hasIndex(1)) {
+      String word = command.getWord(1);
       String description = parser.getCommandDescription(word);
+
+      System.out.println(description);
       return;
     }
 
@@ -106,17 +106,16 @@ public class Game {
   }
 
   /** 
-   * "Quit" was entered. Check the rest of the command to see
+   * "quit" was entered. Check the rest of the command to see
    * whether we really quit the game.
    * @return true, if this command quits the game, false otherwise.
    */
-  private boolean quit(Command command) 
-  {
-    if (command.hasSecondWord()) {
+  private boolean quit(Command command) {
+    if (command.hasIndex(1)) {
       System.out.println("Quit what?");
       return false;
-    } else {
-      return true; // signal that we want to quit
     }
+
+    return true; // signal that we want to quit
   }
 }
