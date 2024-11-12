@@ -17,14 +17,14 @@
 
 public class Game { 
   private Parser parser;
-  private Tube theTube;
+  private Processor processor;
 
   /**
    * Create the game and initialise its internal map.
    */
   public Game() {
     parser = new Parser();
-    theTube = new Tube();
+    processor = new Processor();
   }
 
   /**
@@ -56,7 +56,7 @@ public class Game {
     System.out.println("You should find it before you leaving the stations.");
     System.out.println("Type \"help\" if you need help.");
     System.out.println();
-    System.out.println(theTube.getCurrentExits());
+    System.out.println(processor.getCurrentExits());
   }
 
   /**
@@ -73,12 +73,14 @@ public class Game {
     boolean wantToQuit = false;
     String commandWord = command.getWord(0);
 
+    System.out.println();
+
     if (commandWord.equals("help")) {
       printHelp(command);
     } else if (commandWord.equals("go")) {
-      theTube.processGoCommand(command);
+      System.out.println(processor.processGoCommand(command));
     } else if (commandWord.equals("take")) {
-      theTube.processTakeCommand(command);
+      System.out.println(processor.processTakeCommand(command));
     } else if (commandWord.equals("quit")) {
       wantToQuit = quit(command);
     }
@@ -91,18 +93,16 @@ public class Game {
    * followed by a command, it will print out the description of that command.
    * @param command The help command to be processed
    */
-  private void printHelp(Command command) {
+  public void printHelp(Command command) {
     if (command.hasIndex(1)) {
       String word = command.getWord(1);
       String description = parser.getCommandDescription(word);
-
-      System.out.println(description);
-      return;
+      System.out.println(description != null ? description : "I don't know what you mean.");
     }
 
     System.out.println("You lost your Oyster card during your commute to work. You should find it before leaving the London Underground.\n");
     System.out.println("Your command words are:");
-    parser.showCommands();
+    System.out.println(parser.getCommands());
   }
 
   /** 
@@ -110,7 +110,7 @@ public class Game {
    * whether we really quit the game.
    * @return true, if this command quits the game, false otherwise.
    */
-  private boolean quit(Command command) {
+  public boolean quit(Command command) {
     if (command.hasIndex(1)) {
       System.out.println("Quit what?");
       return false;

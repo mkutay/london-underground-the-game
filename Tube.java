@@ -1,19 +1,15 @@
 import java.util.ArrayList;
-import java.util.Stack;
 
 /**
- * 
- *
+ * This class represents the tube map. It creates all the stations and links them together.
  * @author Mehmet Kutay Bozkurt
  * @version 0.1
  */
 public class Tube {
-  private Stack<Station> backStack;
   private ArrayList<Station> stations;
   
   public Tube() {
     stations = new ArrayList<Station>();
-    backStack = new Stack<Station>();
     createStations();
   }
   
@@ -36,131 +32,57 @@ public class Tube {
     stations.add(new Station("You are currently at London Bridge station.", "London Bridge"));
     stations.add(new Station("You are now being transported to a random station on the tube.", "Random"));
     
-    stations.get(0).setExit("Southbound", "Bakerloo", stations.get(1));
-    stations.get(1).setExit("Northbound", "Bakerloo", stations.get(0));
-    
-    stations.get(1).setExit("Southbound", "Bakerloo", stations.get(6));
-    stations.get(6).setExit("Northbound", "Bakerloo", stations.get(1));
-    
-    stations.get(6).setExit("Southbound", "Bakerloo", stations.get(10));
-    stations.get(10).setExit("Northbound", "Bakerloo", stations.get(6));
-    
-    stations.get(0).setExit("Eastbound", "Central", stations.get(4));
-    stations.get(4).setExit("Westbound", "Central", stations.get(0));
-    
-    stations.get(4).setExit("Eastbound", "Central", stations.get(5));
-    stations.get(5).setExit("Westbound", "Central", stations.get(4));
-    
-    stations.get(5).setExit("Eastbound", "Central", stations.get(9));
-    stations.get(9).setExit("Westbound", "Central", stations.get(5));
-    
-    stations.get(1).setExit("Eastbound", "Picadilly", stations.get(2));
-    stations.get(2).setExit("Westbound", "Picadilly", stations.get(1));
-    
-    stations.get(2).setExit("Eastbound", "Picadilly", stations.get(3));
-    stations.get(3).setExit("Westbound", "Picadilly", stations.get(2));
-    
-    stations.get(3).setExit("Eastbound", "Picadilly", stations.get(4));
-    stations.get(4).setExit("Westbound", "Picadilly", stations.get(3));
-    
-    stations.get(4).setExit("Eastbound", "Picadilly", stations.get(5));
-    stations.get(5).setExit("Westbound", "Picadilly", stations.get(4));
-    
-    stations.get(6).setExit("Eastbound", "District", stations.get(7));
-    stations.get(7).setExit("Westbound", "District", stations.get(6));
-    
-    stations.get(7).setExit("Eastbound", "District", stations.get(8));
-    stations.get(8).setExit("Westbound", "District", stations.get(7));
-    
-    stations.get(8).setExit("Eastbound", "District", stations.get(9));
-    stations.get(9).setExit("Westbound", "District", stations.get(8));
-    
-    stations.get(10).setExit("Eastbound", "Jubilee", stations.get(11));
-    stations.get(11).setExit("Westbound", "Jubilee", stations.get(10));
-    
-    stations.get(11).setExit("Eastbound", "Jubilee", stations.get(12));
-    stations.get(12).setExit("Westbound", "Jubilee", stations.get(11));
-    
-    stations.get(12).setExit("Northbound", "Northern", stations.get(9));
-    stations.get(9).setExit("Southbound", "Northern", stations.get(12));
+    setConnection("Oxford Circuis", "Picadilly Circuis", "Bakerloo", "Southbound", "Northbound");
+    setConnection("Picadilly Circuis", "Embankment", "Bakerloo", "Southbound", "Northbound");
+    setConnection("Embankment", "Waterloo", "Bakerloo", "Southbound", "Northbound");
 
-    stations.get(9).setExit("Random", "Waterloo&City", stations.get(13));
+    setConnection("Oxford Circuis", "Holborn", "Central", "Eastbound", "Westbound");
+    setConnection("Holborn", "Chancery Lane", "Central", "Eastbound", "Westbound");
+    setConnection("Chancery Lane", "Bank", "Central", "Eastbound", "Westbound");
 
-    backStack.push(stations.get(1)); // start the game at Piccadilly Circuis
+    setConnection("Embankment", "Temple", "District", "Eastbound", "Westbound");
+    setConnection("Temple", "Blackfriars", "District", "Eastbound", "Westbound");
+    setConnection("Blackfriars", "Bank", "District", "Eastbound", "Westbound");
+
+    setConnection("Waterloo", "Southwark", "Jubilee", "Eastbound", "Westbound");
+    setConnection("Southwark", "London Bridge", "Jubilee", "Eastbound", "Westbound");
+
+    setConnection("Picadilly Circuis", "Leicester Square", "Picadilly", "Eastbound", "Westbound");
+    setConnection("Leicester Square", "Covent Garden", "Picadilly", "Eastbound", "Westbound");
+    setConnection("Covent Garden", "Holborn", "Picadilly", "Eastbound", "Westbound");
+    
+    setConnection("Bank", "London Bridge", "Northern", "Southbound", "Northbound");
+    
+    setConnection("Bank", "Random", "Waterloo&City", "Random", null);
   }
-  
-  /** 
-   * Try to in to one direction. If there is an exit, enter the new
-   * room, otherwise print an error message.
-   */
-  public void processGoCommand(Command command) {
-    // the "go" command can only take one parameter
-    if (!command.hasIndex(1) || command.hasIndex(2)) {
-      printIncorrectFormat();
-      return;
-    }
 
-    String direction = command.getWord(1);
-    
-    if (direction.equals("back")) {
-      if (backStack.size() == 1) {
-        System.out.println("You cannot go back any further. You are currently at the very beginning.");
-        return;
+  private void setConnection(String name1, String name2, String line, String direction1, String direction2) {
+    Station station1 = null;
+    Station station2 = null;
+    for (Station station : stations) {
+      if (station.getName().equals(name1)) {
+        station1 = station;
+      } else if (station.getName().equals(name2)) {
+        station2 = station;
       }
-
-      backStack.pop();
-      System.out.println(getCurrentExits());
-      return;
     }
 
-    System.out.println("I don't know where I should go.");
-  }
-
-  public void processTakeCommand(Command command) {
-    if (!command.hasIndex(1) || !command.hasIndex(2)) { // if there is no second or third word
-      printIncorrectFormat();
-      return;
+    if (station1 != null && station2 != null) {
+      station1.setExit(direction1, line, station2);
+      if (direction2 != null) {
+        station2.setExit(direction2, line, station1);
+      }
+    } else {
+      System.out.println("error");
     }
-
-    String word2 = command.getWord(1);
-    String word3 = command.getWord(2);
-
-    // trying to leave current station
-    Station nextStation = getCurrentStation().getExit(word2, word3);
-
-    if (nextStation == null) {
-      System.out.println("You cannot take " +
-      capitalizeFirstLetter(word2) + " " +
-      capitalizeFirstLetter(word3) + " line.");
-      return;
-    }
-
-    if (nextStation.getName().equals("Random")) {
-      int randomIndex = (int) (Math.random() * (stations.size() - 1));
-      nextStation = stations.get(randomIndex);
-    }
-
-    backStack.push(nextStation);
-    System.out.println(getCurrentExits());
   }
 
-  public String getCurrentExits() {
-    return getCurrentStation().getDescription();
-  }
-  
-  /**
-   * @return The current station 
-   */
-  private Station getCurrentStation() {
-    // the top of the stack is the current station
-    return backStack.peek();
+  public Station getStartStation() {
+    return stations.get(1); // start the game at Piccadilly Circuis
   }
 
-	private String capitalizeFirstLetter(String str) {
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
-
-  private void printIncorrectFormat() {
-    System.out.println("Entered input has incorrect format. Please enter again.");
+  public Station getRandomStation() {
+    int randomIndex = (int) (Math.random() * (stations.size() - 1));
+    return stations.get(randomIndex);
   }
 }
