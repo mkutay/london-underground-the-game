@@ -7,53 +7,34 @@ import java.util.ArrayList;
  */
 public class Tube {
   private ArrayList<Station> stations;
+  Reader reader;
   
   public Tube() {
     stations = new ArrayList<Station>();
+    reader = new Reader();
     createStations();
+    connectStations();
   }
   
   /**
-   * Create all the stations and link their exits together.
+   * Create all the stations after reading from the files.
    */
   private void createStations() {
-    stations.add(new Station("You are currently at Oxford Circuis station.", "Oxford Circuis"));
-    stations.add(new Station("You are currently at Picadilly Circuis station.", "Picadilly Circuis"));
-    stations.add(new Station("You are currently at Leicester Square station.", "Leicester Square"));
-    stations.add(new Station("You are currently at Covent Garden station.", "Covent Garden"));
-    stations.add(new Station("You are currently at Holborn station.", "Holborn"));
-    stations.add(new Station("You are currently at Chancery Lane station. Don't forget to do your studies at Maughan Library.", "Chancery Lane"));
-    stations.add(new Station("You are currently at Embankment station.", "Embankment"));
-    stations.add(new Station("You are currently at Temple station. Check out the old tube map outside of the station.", "Temple"));
-    stations.add(new Station("You are currently at Blackfriars station.", "Blackfriars"));
-    stations.add(new Station("You are currently at Bank station.", "Bank"));
-    stations.add(new Station("You are currently at Waterloo station.", "Waterloo"));
-    stations.add(new Station("You are currently at Southwark station.", "Soutwark"));
-    stations.add(new Station("You are currently at London Bridge station.", "London Bridge"));
-    stations.add(new Station("You are now being transported to a random station on the tube.", "Random"));
-    
-    setConnection("Oxford Circuis", "Picadilly Circuis", "Bakerloo", "Southbound", "Northbound");
-    setConnection("Picadilly Circuis", "Embankment", "Bakerloo", "Southbound", "Northbound");
-    setConnection("Embankment", "Waterloo", "Bakerloo", "Southbound", "Northbound");
+    ArrayList<String> stationsFile = reader.readFile("stations.txt");
+    for (int i = 0; i < stationsFile.size(); i += 2) {
+      Station station = new Station(stationsFile.get(i), stationsFile.get(i + 1));
+      stations.add(station);
+    }
+  }
 
-    setConnection("Oxford Circuis", "Holborn", "Central", "Eastbound", "Westbound");
-    setConnection("Holborn", "Chancery Lane", "Central", "Eastbound", "Westbound");
-    setConnection("Chancery Lane", "Bank", "Central", "Eastbound", "Westbound");
-
-    setConnection("Embankment", "Temple", "District", "Eastbound", "Westbound");
-    setConnection("Temple", "Blackfriars", "District", "Eastbound", "Westbound");
-    setConnection("Blackfriars", "Bank", "District", "Eastbound", "Westbound");
-
-    setConnection("Waterloo", "Southwark", "Jubilee", "Eastbound", "Westbound");
-    setConnection("Southwark", "London Bridge", "Jubilee", "Eastbound", "Westbound");
-
-    setConnection("Picadilly Circuis", "Leicester Square", "Picadilly", "Eastbound", "Westbound");
-    setConnection("Leicester Square", "Covent Garden", "Picadilly", "Eastbound", "Westbound");
-    setConnection("Covent Garden", "Holborn", "Picadilly", "Eastbound", "Westbound");
-    
-    setConnection("Bank", "London Bridge", "Northern", "Southbound", "Northbound");
-    
-    setConnection("Bank", "Random", "Waterloo&City", "Random", null);
+  /**
+   * Link the station's exits together by reading from the files.
+   */
+  private void connectStations() {
+    ArrayList<String> connectionsFile = reader.readFile("connections.txt");
+    for (int i = 0; i < connectionsFile.size(); i += 6) {
+      setConnection(connectionsFile.get(i), connectionsFile.get(i + 1), connectionsFile.get(i + 2), connectionsFile.get(i + 3), connectionsFile.get(i + 4));
+    }
   }
 
   private void setConnection(String name1, String name2, String line, String direction1, String direction2) {
@@ -69,16 +50,14 @@ public class Tube {
 
     if (station1 != null && station2 != null) {
       station1.setExit(direction1, line, station2);
-      if (direction2 != null) {
-        station2.setExit(direction2, line, station1);
-      }
+      station2.setExit(direction2, line, station1);
     } else {
-      System.out.println("error");
+      System.out.println("Error: station(s) not found: " + name1 + ", " + name2);
     }
   }
 
   public Station getStartStation() {
-    return stations.get(1); // start the game at Piccadilly Circuis
+    return stations.get(1); // start the game at Piccadilly Circus
   }
 
   public Station getRandomStation() {

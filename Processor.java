@@ -1,7 +1,6 @@
 /**
- *
+ * This class is the processor class of the Game.
  */
-
 public class Processor {
   private Tube theTube;
   private Player player;

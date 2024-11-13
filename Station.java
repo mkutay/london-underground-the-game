@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 
 /**
  * Class Room - a room in an adventure game.
@@ -20,6 +21,7 @@ public class Station {
   private String description;
   private String name;
   private HashMap<Entry<String, String>, Station> exits; // stores exits of this room
+  private ArrayList<Item> items; // stores items in this room
 
   /**
    * Create a station described as "description" with name as "name". Initially, it has
@@ -63,6 +65,23 @@ public class Station {
       returnString += "\n  " +
 				capitalizeFirstLetter(exit.getKey()) + " " +
 				capitalizeFirstLetter(exit.getValue()) + " line,";
+    }
+
+    return returnString.substring(0, returnString.length() - 1) + ".";
+  }
+
+  /**
+   * Return a string describing the items found in the station.
+   * @return Details of the station's items.
+   */
+  private String getItemString() {
+    String returnString = "You find the following items in the station:";
+
+    for (Item item : items) {
+      returnString += "\n  " +
+				item.getName() + " (" +
+        item.getWeight() + " pounds): " +
+        item.getDescription() + ",";
     }
 
     return returnString.substring(0, returnString.length() - 1) + ".";

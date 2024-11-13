@@ -2,10 +2,12 @@ import java.util.Stack;
 
 public class Player {
   private Stack<Station> backStack;
+  private Inventory inventory;
   
   public Player(Station startStation) {
     backStack = new Stack<Station>();
     backStack.push(startStation);
+    inventory = new Inventory();
   }
 
   public Station getCurrentStation() {

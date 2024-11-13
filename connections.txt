@@ -1,0 +1,95 @@
+Oxford Circus
+Picadilly Circus
+Bakerloo
+Southbound
+Northbound
+
+Picadilly Circus
+Embankment
+Bakerloo
+Southbound
+Northbound
+
+Embankment
+Waterloo
+Bakerloo
+Southbound
+Northbound
+
+Oxford Circus
+Holborn
+Central
+Eastbound
+Westbound
+
+Holborn
+Chancery Lane
+Central
+Eastbound
+Westbound
+
+Chancery Lane
+Bank
+Central
+Eastbound
+Westbound
+
+Embankment
+Temple
+District
+Eastbound
+Westbound
+
+Temple
+Blackfriars
+District
+Eastbound
+Westbound
+
+Blackfriars
+Bank
+District
+Eastbound
+Westbound
+
+Waterloo
+Southwark
+Jubilee
+Eastbound
+Westbound
+
+Southwark
+London Bridge
+Jubilee
+Eastbound
+Westbound
+
+Picadilly Circus
+Leicester Square
+Picadilly
+Eastbound
+Westbound
+
+Leicester Square
+Covent Garden
+Picadilly
+Eastbound
+Westbound
+
+Covent Garden
+Holborn
+Picadilly
+Eastbound
+Westbound
+
+Bank
+London Bridge
+Northern
+Southbound
+Northbound
+
+Bank
+Random
+Waterloo&City
+Random
+Random

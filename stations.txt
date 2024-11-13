@@ -1,0 +1,28 @@
+You are currently at Oxford Circus station.
+Oxford Circus
+You are currently at Picadilly Circus station.
+Picadilly Circus
+You are currently at Leicester Square station.
+Leicester Square
+You are currently at Covent Garden station.
+Covent Garden
+You are currently at Holborn station.
+Holborn
+You are currently at Chancery Lane station. Don't forget to do your studies at Maughan Library.
+Chancery Lane
+You are currently at Embankment station.
+Embankment
+You are currently at Temple station. Check out the old tube map outside of the station.
+Temple
+You are currently at Blackfriars station.
+Blackfriars
+You are currently at Bank station.
+Bank
+You are currently at Waterloo station.
+Waterloo
+You are currently at Southwark station.
+Southwark
+You are currently at London Bridge station.
+London Bridge
+You are now being transported to a random station on the tube.
+Random
