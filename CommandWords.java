@@ -53,6 +53,6 @@ public class CommandWords {
     for (String command : validCommands.keySet()) {
       returnString += command + "  ";
     }
-    return returnString + "\n";
+    return returnString;
   }
 }

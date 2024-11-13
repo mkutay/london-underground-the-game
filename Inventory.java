@@ -43,6 +43,10 @@ public class Inventory {
   }
 
   public String toString() {
+    if (items.isEmpty()) {
+      return "Inventory: empty.";
+    }
+    
     String returnString = "Inventory: ";
     for (Item item : items) {
       returnString += "\n  " + item.getName() + ",";

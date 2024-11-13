@@ -104,6 +104,7 @@ public class Game {
       String word = command.getWord(1);
       String description = parser.getCommandDescription(word);
       System.out.println(description != null ? description : "I don't know what you mean.");
+      return;
     }
 
     System.out.println("You lost your Oyster card during your commute to work. You should find it before leaving the London Underground.\n");

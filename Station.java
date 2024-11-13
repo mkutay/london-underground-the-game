@@ -33,6 +33,7 @@ public class Station {
     this.description = description;
     this.name = name;
     exits = new HashMap<>();
+    items = new ArrayList<>();
   }
 
   /**
@@ -50,7 +51,8 @@ public class Station {
    * @return A long description of this station.
    */
   public String getDescription() {
-    return description + "\n" + getExitString();
+    String itemsString = items.isEmpty() ? "" : "\n" + getItemString();
+    return description + itemsString + "\n" + getExitString();
   }
 
   /**
