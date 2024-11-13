@@ -25,4 +25,20 @@ public class Player {
   public void pushBackStack(Station station) {
     backStack.push(station);
   }
+
+  public boolean pickItem(Item item) {
+    return inventory.addItem(item);
+  }
+
+  public Item getItem(String itemName) {
+    return inventory.getItem(itemName);
+  }
+
+  public void dropItem(Item item) {
+    inventory.removeItem(item);
+  }
+
+  public String getInventory() {
+    return inventory.toString();
+  }
 }

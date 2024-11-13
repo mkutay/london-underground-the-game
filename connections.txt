@@ -87,9 +87,3 @@ London Bridge
 Northern
 Southbound
 Northbound
-
-Bank
-Random
-Waterloo&City
-Random
-Random

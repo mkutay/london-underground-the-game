@@ -77,12 +77,18 @@ public class Game {
 
     if (commandWord.equals("help")) {
       printHelp(command);
-    } else if (commandWord.equals("go")) {
-      System.out.println(processor.processGoCommand(command));
+    } else if (commandWord.equals("back")) {
+      System.out.println(processor.processBackCommand(command));
     } else if (commandWord.equals("take")) {
       System.out.println(processor.processTakeCommand(command));
     } else if (commandWord.equals("quit")) {
       wantToQuit = quit(command);
+    } else if (commandWord.equals("pick")) {
+      System.out.println(processor.processPickCommand(command));
+    } else if (commandWord.equals("drop")) {
+      System.out.println(processor.processDropCommand(command));
+    } else if (commandWord.equals("inventory")) {
+      System.out.println(processor.processInventoryCommand(command));
     }
     
     return wantToQuit;

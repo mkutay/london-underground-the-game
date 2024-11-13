@@ -11,27 +11,20 @@ public class Processor {
   }
 
   /** 
-   * Try to in to one direction. If there is an exit, enter the new
-   * room, otherwise print an error message.
+   * Process the "back" command, allowing the player to go back to the previous station.
    */
-  public String processGoCommand(Command command) {
-    // the "go" command can only take one parameter
-    if (!command.hasIndex(1) || command.hasIndex(2)) {
+  public String processBackCommand(Command command) {
+    // the "back" command cannot take parameters
+    if (command.hasIndex(1)) {
       return incorrectFormat();
     }
 
-    String direction = command.getWord(1);
-    
-    if (direction.equals("back")) {
-      if (player.getBackStackCount() == 1) {
-        return "You cannot go back any further. You are currently at the very beginning.";
-      }
-
-      player.popBackStack();
-      return getCurrentExits();
+    if (player.getBackStackCount() == 1) {
+      return "You cannot go back any further. You are currently at the very beginning.";
     }
 
-    return "I don't know where I should go.";
+    player.popBackStack();
+    return getCurrentExits();
   }
 
   public String processTakeCommand(Command command) {
@@ -57,6 +50,52 @@ public class Processor {
 
     player.pushBackStack(nextStation);
     return getCurrentExits();
+  }
+
+  public String processPickCommand(Command command) {
+    if (!command.hasIndex(1) || command.hasIndex(2)) {
+      return incorrectFormat();
+    }
+
+    String word2 = command.getWord(1);
+    Item item = player.getCurrentStation().getItem(word2);
+
+    if (item == null) {
+      return "There is no " + word2 + " in this station.";
+    }
+
+    if (player.pickItem(item)) {
+      player.getCurrentStation().removeItem(item);
+      return "You have picked up " + item.getName() + ".";
+    }
+
+    return "You cannot pick up " + item.getName() + " because it is too heavy.";
+  }
+
+  public String processDropCommand(Command command) {
+    if (!command.hasIndex(1) || command.hasIndex(2)) {
+      return incorrectFormat();
+    }
+
+    String word2 = command.getWord(1);
+    Item item = player.getItem(word2);
+
+    if (item == null) {
+      return "You do not have " + word2 + " in your inventory.";
+    }
+
+    player.dropItem(item);
+    player.getCurrentStation().addItem(item);
+
+    return "You have dropped " + item.getName() + " in your location.";
+  }
+
+  public String processInventoryCommand(Command command) {
+    if (command.hasIndex(1)) {
+      return incorrectFormat();
+    }
+
+    return player.getInventory();
   }
 
   public String getCurrentExits() {

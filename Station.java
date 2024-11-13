@@ -88,6 +88,37 @@ public class Station {
   }
 
   /**
+   * Add an item to the station.
+   * @param item The item to be added.
+   */
+  public void addItem(Item item) {
+    items.add(item);
+  }
+
+  /**
+   * Remove an item from the station.
+   * @param item The item to be removed.
+   */
+  public void removeItem(Item item) {
+    items.remove(item);
+  }
+
+  /**
+   * Return the item with the given name.
+   * @param itemName The name of the item.
+   * @return The item with the given name.
+   */
+  public Item getItem(String itemName) {
+    itemName = itemName.toLowerCase();
+    for (Item item : items) {
+      if (item.getName().equals(itemName)) {
+        return item;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Return the station that is reached if we go from this station in direction
    * "direction" with line "line". If there is no station in that direction, return null.
    * @param direction The exit's direction.

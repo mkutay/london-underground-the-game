@@ -24,5 +24,3 @@ You are currently at Southwark station.
 Southwark
 You are currently at London Bridge station.
 London Bridge
-You are now being transported to a random station on the tube.
-Random

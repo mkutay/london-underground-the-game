@@ -20,10 +20,13 @@ public class CommandWords {
   public CommandWords() {
     validCommands = new HashMap<>();
     
-    validCommands.put("go", "");
-    validCommands.put("take", "");
-    validCommands.put("help", "");
-    validCommands.put("quit", "");
+    validCommands.put("back", "\"back\" - Go back to the last station you were on. You can go back as you desire.");
+    validCommands.put("take", "\"take [direction] [line]\" - Take a line to a direction, for instance \"take eastbound picadilly\"");
+    validCommands.put("help", "\"help [command]\" - Print out the help message for the command, for instance \"help go\", or just \"help\" for all commands");
+    validCommands.put("quit", "\"quit\" - Quit the game");
+    validCommands.put("pick", "\"pick [item]\" - Pick up an item, for instance \"pick card\"");
+    validCommands.put("drop", "\"drop [item]\" - Drop an item, for instance \"drop card\"");
+    validCommands.put("inventory", "\"inventory\" - List all the items in your inventory");
   }
 
   /**

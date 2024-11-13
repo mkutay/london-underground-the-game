@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * This class represents the tube map. It creates all the stations and links them together.
@@ -25,6 +26,7 @@ public class Tube {
       Station station = new Station(stationsFile.get(i), stationsFile.get(i + 1));
       stations.add(station);
     }
+    stations.add(new Station("You are now being transported to a random station on the tube.", "Random"));
   }
 
   /**
@@ -35,8 +37,18 @@ public class Tube {
     for (int i = 0; i < connectionsFile.size(); i += 6) {
       setConnection(connectionsFile.get(i), connectionsFile.get(i + 1), connectionsFile.get(i + 2), connectionsFile.get(i + 3), connectionsFile.get(i + 4));
     }
+
+    setConnection("Bank", "Random", "Waterloo&City", "Random", "Random");
   }
 
+  /**
+   * Set the connection between two stations.
+   * @param name1 The name of the first station.
+   * @param name2 The name of the second station.
+   * @param line The line that connects the two stations, like Bakerloo
+   * @param direction1 The direction from the first station to the second station, like Northbound
+   * @param direction2 The direction from the second station to the first station, like Southbound
+   */
   private void setConnection(String name1, String name2, String line, String direction1, String direction2) {
     Station station1 = null;
     Station station2 = null;
@@ -52,14 +64,21 @@ public class Tube {
       station1.setExit(direction1, line, station2);
       station2.setExit(direction2, line, station1);
     } else {
-      System.out.println("Error: station(s) not found: " + name1 + ", " + name2);
+      // This should not run, but is used as a precaution.
+      System.out.println("ERROR: station(s) not found: " + name1 + ", " + name2);
     }
   }
 
+  /**
+   * @return The starting station of the game.
+   */
   public Station getStartStation() {
     return stations.get(1); // start the game at Piccadilly Circus
   }
 
+  /**
+   * @return A random station from the tube, not including the Random station.
+   */
   public Station getRandomStation() {
     int randomIndex = (int) (Math.random() * (stations.size() - 1));
     return stations.get(randomIndex);
