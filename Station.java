@@ -1,10 +1,9 @@
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
 
 /**
- * Class Room - a room in an adventure game.
+ * Class Station - a room in an adventure game.
  *
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
@@ -14,14 +13,14 @@ import java.util.ArrayList;
  * stores a reference to the neighboring room.
  * 
  * @author  Michael Kölling, David J. Barnes, and Mehmet Kutay Bozkurt
- * @version 2016.02.29
+ * @version 1.0
  */
 
 public class Station {
   private String description;
   private String name;
-  private HashMap<Entry<String, String>, Station> exits; // stores exits of this room
-  private ArrayList<Item> items; // stores items in this room
+  private HashMap<Entry<String, String>, Station> exits; // stores exits of this station
+  private Inventory items; // stores items in this station
 
   /**
    * Create a station described as "description" with name as "name". Initially, it has
@@ -33,7 +32,7 @@ public class Station {
     this.description = description;
     this.name = name;
     exits = new HashMap<>();
-    items = new ArrayList<>();
+    items = new Inventory(Integer.MAX_VALUE); // stations can have unlimited items
   }
 
   /**
@@ -79,14 +78,7 @@ public class Station {
   private String getItemString() {
     String returnString = "You find the following items in the station:";
 
-    for (Item item : items) {
-      returnString += "\n  " +
-				item.getName() + " (" +
-        item.getWeight() + " pounds): " +
-        item.getDescription() + ",";
-    }
-
-    return returnString.substring(0, returnString.length() - 1) + ".";
+    return returnString + items.toString();
   }
 
   /**
@@ -94,7 +86,7 @@ public class Station {
    * @param item The item to be added.
    */
   public void addItem(Item item) {
-    items.add(item);
+    items.addItem(item);
   }
 
   /**
@@ -102,7 +94,7 @@ public class Station {
    * @param item The item to be removed.
    */
   public void removeItem(Item item) {
-    items.remove(item);
+    items.removeItem(item);
   }
 
   /**
@@ -111,13 +103,7 @@ public class Station {
    * @return The item with the given name.
    */
   public Item getItem(String itemName) {
-    itemName = itemName.toLowerCase();
-    for (Item item : items) {
-      if (item.getName().equals(itemName)) {
-        return item;
-      }
-    }
-    return null;
+    return items.getItem(itemName);
   }
 
   /**
@@ -131,10 +117,16 @@ public class Station {
     return exits.get(new SimpleEntry<>(direction.toLowerCase(), line.toLowerCase()));
   }
 
+  /**
+   * Capitalize the first letter of a given string.
+   */
 	private String capitalizeFirstLetter(String str) {
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 
+  /**
+   * @return The name of the station.
+   */
   public String getName() {
     return name;
   }
