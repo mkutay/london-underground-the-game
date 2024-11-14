@@ -7,7 +7,7 @@ import java.util.Stack;
  * @version 1.0
  */
 public class Player {
-  private Stack<Station> backStack;
+  private Stack<Station> backStack; // The stack of stations visited by the player.
   private Inventory inventory;
   
   /**

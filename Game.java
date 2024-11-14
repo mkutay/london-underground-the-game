@@ -1,18 +1,15 @@
 /**
- *  This class is the main class of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
+ * This class is the main class of the "London Underground" application. 
+ * "World of Zuul" is a very simple, text based adventure game. Users
+ * can walk around some of the underground stations in central London,
+ * pick up and drop items, and try to find a way out of the stations.
  * 
- *  To play this game, create an instance of this class and call the "play"
- *  method.
+ * This main class creates and initialises the parser and the processor,
+ * which are used to read and process the user commands. It also creates
+ * the game loop.
  * 
- *  This main class creates and initialises all the others: it creates all
- *  rooms, creates the parser and starts the game.  It also evaluates and
- *  executes the commands that the parser returns.
- * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Michael Kölling, David J. Barnes, Mehmet Kutay Bozkurt
+ * @version 1.0
  */
 
 public class Game { 
@@ -28,7 +25,7 @@ public class Game {
   }
 
   /**
-   *  Main play routine. Loops until end of play.
+   * Main play routine. Loops until end of play.
    */
   public void play() {
     printWelcome();
@@ -42,8 +39,6 @@ public class Game {
       Command command = parser.getCommand();
       finished = processCommand(command);
     }
-    
-    System.out.println("Thank you for playing. Good bye.");
   }
 
   /**
@@ -53,7 +48,7 @@ public class Game {
     System.out.println();
     System.out.println("Welcome to the London Underground!");
     System.out.println("This is a game where you are lost in the London tube without your Oyster card.");
-    System.out.println("You should find it before you leaving the stations.");
+    System.out.println("You should find it before you leave the underground.");
     System.out.println("Type \"help\" if you need help.");
     System.out.println();
     System.out.println(processor.getCurrentExits());
@@ -65,33 +60,40 @@ public class Game {
    * @return true if the command ends the game, false otherwise.
    */
   private boolean processCommand(Command command) {
-    if (command == null || command.isUnknown()) {
+    if (command.isUnknown()) {
       System.out.println("I don't know what you mean. Try typing \"help\" for more information.");
       return false;
     }
 
-    boolean wantToQuit = false;
-    String commandWord = command.getWord(0);
+    String commandWord = command.getWord(0).toLowerCase();
 
     System.out.println();
 
+    String output = null;
+
+    // the processor returns Strings to be printed out
     if (commandWord.equals("help")) {
       printHelp(command);
     } else if (commandWord.equals("back")) {
-      System.out.println(processor.processBackCommand(command));
+      output = processor.back(command);
     } else if (commandWord.equals("take")) {
-      System.out.println(processor.processTakeCommand(command));
+      output = processor.take(command);
     } else if (commandWord.equals("quit")) {
-      wantToQuit = quit(command);
+      output = processor.quit(command);
     } else if (commandWord.equals("pick")) {
-      System.out.println(processor.processPickCommand(command));
+      output = processor.pick(command);
     } else if (commandWord.equals("drop")) {
-      System.out.println(processor.processDropCommand(command));
+      output = processor.drop(command);
     } else if (commandWord.equals("inventory")) {
-      System.out.println(processor.processInventoryCommand(command));
+      output = processor.inventory(command);
+    }
+
+    if (output == null) {
+      System.out.println("Thank you for playing. Good Bye!");
+      return true;
     }
     
-    return wantToQuit;
+    return false;
   }
 
   /**
@@ -99,30 +101,22 @@ public class Game {
    * followed by a command, it will print out the description of that command.
    * @param command The help command to be processed
    */
-  public void printHelp(Command command) {
+  private void printHelp(Command command) {
     if (command.hasIndex(1)) {
       String word = command.getWord(1);
       String description = parser.getCommandDescription(word);
-      System.out.println(description != null ? description : "I don't know what you mean.");
+
+      if (description == null) {
+        System.out.println("I don't know what you mean.");
+      } else {
+        System.out.println(description);
+      }
+
       return;
     }
 
     System.out.println("You lost your Oyster card during your commute to work. You should find it before leaving the London Underground.\n");
     System.out.println("Your command words are:");
     System.out.println(parser.getCommands());
-  }
-
-  /** 
-   * "quit" was entered. Check the rest of the command to see
-   * whether we really quit the game.
-   * @return true, if this command quits the game, false otherwise.
-   */
-  public boolean quit(Command command) {
-    if (command.hasIndex(1)) {
-      System.out.println("Quit what?");
-      return false;
-    }
-
-    return true; // signal that we want to quit
   }
 }

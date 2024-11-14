@@ -1,20 +1,25 @@
 /**
  * This class is the processor class of the Game.
+ * It processes the commands entered by the user and
+ * returns the appropriate output. It also holds the
+ * Tube and Player objects.
+ * @author Mehmet Kutay Bozkurt
+ * @version 1.0
  */
 public class Processor {
-  private Tube theTube;
+  private Tube tube;
   private Player player;
 
   public Processor() {
-    theTube = new Tube();
-    player = new Player(theTube.getStartStation());
+    tube = new Tube();
+    player = new Player(tube.getStartStation());
   }
 
   /** 
    * Process the "back" command, allowing the player to go back to the previous station.
    * @return String to be outputed to System.out
    */
-  public String processBackCommand(Command command) {
+  public String back(Command command) {
     // the "back" command cannot take parameters
     if (command.hasIndex(1)) {
       return incorrectFormat();
@@ -33,7 +38,7 @@ public class Processor {
    * line/direction to the next station.
    * @return String to be outputed to System.out
    */
-  public String processTakeCommand(Command command) {
+  public String take(Command command) {
     if (!command.hasIndex(1)) {
       return incorrectFormat();
     }
@@ -48,6 +53,7 @@ public class Processor {
       if (word3 == null) {
         return "There is more than one possible exits. Please be more specific";
       }
+
       return "You cannot take " +
         capitalizeFirstLetter(word2) + " " +
         capitalizeFirstLetter(word3) + " line.";
@@ -55,7 +61,7 @@ public class Processor {
 
     // if we're at the invisible "Random" station, get an actual random station
     if (nextStation.getName().equals("Random")) {
-      nextStation = theTube.getRandomStation();
+      nextStation = tube.getRandomStation();
     }
 
     player.pushBackStack(nextStation);
@@ -66,18 +72,20 @@ public class Processor {
    * Process the "pick" command, allowing the player to pick up an item from the station.
    * @return String to be outputed to System.out
    */
-  public String processPickCommand(Command command) {
+  public String pick(Command command) {
     if (!command.hasIndex(1) || command.hasIndex(2)) {
       return incorrectFormat();
     }
 
     String word2 = command.getWord(1);
+
     Item item = player.getCurrentStation().getItem(word2);
 
     if (item == null) {
       return "There is no " + word2 + " in this station.";
     }
 
+    // pickItem returns true if the item was picked up (that is if it was light enough)
     if (player.pickItem(item)) {
       player.getCurrentStation().removeItem(item);
       return "You have picked up " + item.getName() + ".";
@@ -86,7 +94,12 @@ public class Processor {
     return "You cannot pick up " + item.getName() + " because it is too heavy.";
   }
 
-  public String processDropCommand(Command command) {
+  /**
+   * Process the "drop" command, allowing the player to drop an item from
+   * their inventory into the station.
+   * @return String to be outputed to System.out
+   */
+  public String drop(Command command) {
     if (!command.hasIndex(1) || command.hasIndex(2)) {
       return incorrectFormat();
     }
@@ -108,7 +121,7 @@ public class Processor {
    * Process the "inventory" command, allowing the player to see the items in their inventory.
    * @return String to be outputed to System.out
    */
-  public String processInventoryCommand(Command command) {
+  public String inventory(Command command) {
     if (command.hasIndex(1)) {
       return incorrectFormat();
     }
@@ -116,14 +129,36 @@ public class Processor {
     return player.getInventory();
   }
 
+  /** 
+   * "quit" was entered. Check the rest of the command to see
+   * whether we really quit the game.
+   * @return null, if this command quits the game, an output otherwise.
+   */
+  public String quit(Command command) {
+    if (command.hasIndex(1)) {
+      return incorrectFormat();
+    }
+
+    return null; // signal that we want to quit
+  }
+
+  /**
+   * @return the current exits of the player's current station as a String.
+   */
   public String getCurrentExits() {
     return player.getCurrentStation().getDescription();
   }
 
+  /**
+   * Capitalize the first letter of a given string.
+   */
   private String capitalizeFirstLetter(String str) {
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 
+  /**
+   * @return a String indicating that the input has incorrect format.
+   */
   private String incorrectFormat() {
     return "Entered input has incorrect format. Please enter again.";
   }

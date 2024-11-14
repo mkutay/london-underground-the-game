@@ -2,16 +2,18 @@ import java.util.ArrayList;
 
 /**
  * This class represents the tube map. It creates all the stations and links them together.
+ * It also creates the items that are placed in the stations.
  * @author Mehmet Kutay Bozkurt
- * @version 0.1
+ * @version 1.0
  */
 public class Tube {
   private ArrayList<Station> stations;
-  Reader reader;
+  Reader reader; // helper to read from files
   
   public Tube() {
     stations = new ArrayList<Station>();
     reader = new Reader();
+
     createStations();
     connectStations();
     createItems();
@@ -41,6 +43,9 @@ public class Tube {
     setConnection("Bank", "Random", "Waterloo&City", "Random", "Random");
   }
 
+  /**
+   * Create the items that are placed in the stations.
+   */
   private void createItems() {
     for (Station station : stations) {
       if (station.getName().equals("Bank")) {
@@ -78,14 +83,14 @@ public class Tube {
   }
 
   /**
-   * @return The starting station of the game.
+   * @return the predefined starting station of the game.
    */
   public Station getStartStation() {
     return stations.get(1); // start the game at Piccadilly Circus
   }
 
   /**
-   * @return A random station from the tube, not including the Random station.
+   * @return a random station from the tube, not including the Random station.
    */
   public Station getRandomStation() {
     int randomIndex = (int) (Math.random() * (stations.size() - 1));

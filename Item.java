@@ -1,5 +1,6 @@
 /**
- * Represents an item in the game.
+ * Represents an item in the game with a name, description, and weight.
+ * 
  * @author Mehmet Kutay Bozkurt
  * @version 1.0
  */

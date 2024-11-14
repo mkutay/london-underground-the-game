@@ -1,14 +1,12 @@
 import java.util.HashMap;
 
 /**
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.
- * 
  * This class holds an enumeration of all command words known to the game.
- * It is used to recognise commands as they are typed in.
+ * It is used to recognise commands as they are typed in. It also holds a
+ * description of each command.
  *
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author Michael Kölling, David J. Barnes, Mehmet Kutay Bozkurt
+ * @version 1.0
  */
 
 public class CommandWords {
@@ -46,7 +44,7 @@ public class CommandWords {
   }
 
   /**
-   * Print all valid commands to System.out.
+   * @return all valid commands as String.
    */
   public String getAll() {
     String returnString = "";

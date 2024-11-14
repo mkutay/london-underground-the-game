@@ -2,12 +2,19 @@ import java.util.ArrayList;
 
 /**
  * The inventory class representing the player's inventory
- * or items in a station in the game.
+ * or items in a station in the game, with a maximum weight.
+ * 
+ * @author Mehmet Kutay Bozkurt
+ * @version 1.0
  */
 public class Inventory {
   private int maxWeight;
   private ArrayList<Item> items;
 
+  /**
+   * Constructor for the inventory.
+   * @param maxWeight The maximum weight the inventory can hold.
+   */
   public Inventory(int maxWeight) {
     items = new ArrayList<Item>();
     this.maxWeight = maxWeight;

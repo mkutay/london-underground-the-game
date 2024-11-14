@@ -1,14 +1,8 @@
 /**
- * Class Station - a station in an adventure game.
- *
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
- *
- * A "Room" represents one location in the scenery of the game.  It is 
- * connected to other rooms via exits.  For each existing exit, the room 
- * stores a reference to the neighboring room.
+ * A "Station" represents one location in the scenery of the game. It is 
+ * connected to other stations via lines (that is exits).
  * 
- * @author  Michael Kölling, David J. Barnes, and Mehmet Kutay Bozkurt
+ * @author Michael Kölling, David J. Barnes, and Mehmet Kutay Bozkurt
  * @version 1.0
  */
 public class Station {

@@ -3,7 +3,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 /**
- * This class represents the exits of a station.
+ * This class represents the exits of a station, stroing them in a hashmap.
+ * 
  * @author Mehmet Kutay Bozkurt
  * @version 1.0
  */
