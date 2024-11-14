@@ -12,6 +12,7 @@ public class Processor {
 
   /** 
    * Process the "back" command, allowing the player to go back to the previous station.
+   * @return String to be outputed to System.out
    */
   public String processBackCommand(Command command) {
     // the "back" command cannot take parameters
@@ -27,8 +28,13 @@ public class Processor {
     return getCurrentExits();
   }
 
+  /**
+   * Process the "take" command, allowing the player to take a specific
+   * line/direction to the next station.
+   * @return String to be outputed to System.out
+   */
   public String processTakeCommand(Command command) {
-    if (!command.hasIndex(1) || !command.hasIndex(2)) { // if there is no second or third word
+    if (!command.hasIndex(1)) {
       return incorrectFormat();
     }
 
@@ -39,11 +45,15 @@ public class Processor {
     Station nextStation = player.getCurrentStation().getExit(word2, word3);
 
     if (nextStation == null) {
+      if (word3 == null) {
+        return "There is more than one possible exits. Please be more specific";
+      }
       return "You cannot take " +
-      capitalizeFirstLetter(word2) + " " +
-      capitalizeFirstLetter(word3) + " line.";
+        capitalizeFirstLetter(word2) + " " +
+        capitalizeFirstLetter(word3) + " line.";
     }
 
+    // if we're at the invisible "Random" station, get an actual random station
     if (nextStation.getName().equals("Random")) {
       nextStation = theTube.getRandomStation();
     }
@@ -52,6 +62,10 @@ public class Processor {
     return getCurrentExits();
   }
 
+  /**
+   * Process the "pick" command, allowing the player to pick up an item from the station.
+   * @return String to be outputed to System.out
+   */
   public String processPickCommand(Command command) {
     if (!command.hasIndex(1) || command.hasIndex(2)) {
       return incorrectFormat();
@@ -90,6 +104,10 @@ public class Processor {
     return "You have dropped " + item.getName() + " in your location.";
   }
 
+  /**
+   * Process the "inventory" command, allowing the player to see the items in their inventory.
+   * @return String to be outputed to System.out
+   */
   public String processInventoryCommand(Command command) {
     if (command.hasIndex(1)) {
       return incorrectFormat();

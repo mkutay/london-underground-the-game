@@ -51,11 +51,25 @@ public class Exits {
   /**
    * Return the station that is reached if we go from this station in direction
    * "direction" with line "line". If there is no station in that direction, return null.
-   * @param direction The exit's direction.
-   * @param line The exit's specific line.
-   * @return The station in the given direction.
+   * If only word2 is given, look if there is only one exit to be taken with the given information,
+   * if yes, take it, if not, return null.
+   * @param word2 The exit's direction.
+   * @param word3 The exit's specific line.
+   * @return The station in the given direction, or null if it doesn't exist.
    */
-  public Station getExit(String direction, String line) {
-    return exits.get(new SimpleEntry<>(direction.toLowerCase(), line.toLowerCase()));
+  public Station getExit(String word2, String word3) {
+    if (word3 != null) {
+      return exits.get(new SimpleEntry<>(word2.toLowerCase(), word3.toLowerCase()));
+    }
+    Station returnStation = null;
+    for (Entry<String, String> exit : exits.keySet()) {
+      if (exit.getKey().equals(word2.toLowerCase()) || exit.getValue().equals(word2.toLowerCase())) {
+        if (returnStation != null) {
+          return null;
+        }
+        returnStation = exits.get(exit);
+      }
+    }
+    return returnStation;
   }
 }

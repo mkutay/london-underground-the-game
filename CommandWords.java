@@ -21,7 +21,7 @@ public class CommandWords {
     validCommands = new HashMap<>();
     
     validCommands.put("back", "\"back\" - Go back to the last station you were on. You can go back as you desire.");
-    validCommands.put("take", "\"take [direction] [line]\" - Take a line to a direction, for instance \"take eastbound picadilly\"");
+    validCommands.put("take", "\"take [direction] [line]\" - Take a line to a direction, for instance \"take eastbound picadilly\", or just \"take eastbound\" or \"take piccadilly\" if there is only one exit that can be determined by the line or direction by itself.");
     validCommands.put("help", "\"help [command]\" - Print out the help message for the command, for instance \"help go\", or just \"help\" for all commands");
     validCommands.put("quit", "\"quit\" - Quit the game");
     validCommands.put("pick", "\"pick [item]\" - Pick up an item, for instance \"pick card\"");

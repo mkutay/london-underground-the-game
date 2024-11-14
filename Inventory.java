@@ -69,7 +69,7 @@ public class Inventory {
     for (Item item : items) {
       returnString += "\n  " + item.toString();
     }
-    return returnString.substring(0, returnString.length() - 1);
+    return returnString;
   }
 
   /**

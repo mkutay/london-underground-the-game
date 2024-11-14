@@ -38,7 +38,7 @@ public class Command {
   }
 
   /**
-   * @return The word of the command at a certain index.
+   * @return The word of the command at a certain index, or null if the index is out of bounds.
    */
   public String getWord(int index) {
     return hasIndex(index) ? words.get(index) : null;

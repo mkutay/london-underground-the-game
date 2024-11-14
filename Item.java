@@ -43,6 +43,6 @@ public class Item {
    * its name, weight, and description.
    */
   public String toString() {
-    return name + " (" + weight + " pounds): " + description;
+    return name + " (" + weight + " lbs): " + description;
   }
 }

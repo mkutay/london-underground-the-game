@@ -1,5 +1,5 @@
 /**
- * Class Station - a room in an adventure game.
+ * Class Station - a station in an adventure game.
  *
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
@@ -11,7 +11,6 @@
  * @author  Michael Kölling, David J. Barnes, and Mehmet Kutay Bozkurt
  * @version 1.0
  */
-
 public class Station {
   private String description;
   private String name;
@@ -46,8 +45,8 @@ public class Station {
    * @return A long description of this station.
    */
   public String getDescription() {
-    String itemsString = items.isEmpty() ? "" : "\n" + getItemString();
-    return description + itemsString + "\n" + getExitString();
+    String itemsString = items.isEmpty() ? "" : "\n\n" + getItemString();
+    return description + itemsString + "\n\n" + getExitString();
   }
 
   /**
@@ -100,8 +99,8 @@ public class Station {
    * @param line The exit's specific line.
    * @return The station in the given direction.
    */
-  public Station getExit(String direction, String line) {
-    return exits.getExit(direction, line);
+  public Station getExit(String word2, String word3) {
+    return exits.getExit(word2, word3);
   }
 
   /**
@@ -111,4 +110,3 @@ public class Station {
     return name;
   }
 }
-
