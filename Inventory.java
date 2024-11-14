@@ -39,7 +39,7 @@ public class Inventory {
   public Item getItem(String itemName) {
     itemName = itemName.toLowerCase();
     for (Item item : items) {
-      if (item.getName().equals(itemName)) {
+      if (item.getName().toLowerCase().equals(itemName)) {
         return item;
       }
     }
@@ -67,9 +67,9 @@ public class Inventory {
 
     String returnString = "";
     for (Item item : items) {
-      returnString += "\n  " + item.toString() + ",";
+      returnString += "\n  " + item.toString();
     }
-    return returnString.substring(0, returnString.length() - 1) + ".";
+    return returnString.substring(0, returnString.length() - 1);
   }
 
   /**

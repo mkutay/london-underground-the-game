@@ -14,6 +14,7 @@ public class Tube {
     reader = new Reader();
     createStations();
     connectStations();
+    createItems();
   }
   
   /**
@@ -38,6 +39,14 @@ public class Tube {
     }
 
     setConnection("Bank", "Random", "Waterloo&City", "Random", "Random");
+  }
+
+  private void createItems() {
+    for (Station station : stations) {
+      if (station.getName().equals("Bank")) {
+        station.addItem(new Item("Oyster", "A card that allows you to travel in and out on the London Underground.", 1));
+      }
+    }
   }
 
   /**

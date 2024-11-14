@@ -3,6 +3,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * This class reads a file and returns its content as an ArrayList of Strings.
+ */
 public class Reader {
   /**
    * A part of this method was taken from https://www.w3schools.com/java/java_files_read.asp

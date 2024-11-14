@@ -1,7 +1,3 @@
-import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.AbstractMap.SimpleEntry;
-
 /**
  * Class Station - a room in an adventure game.
  *
@@ -19,7 +15,7 @@ import java.util.AbstractMap.SimpleEntry;
 public class Station {
   private String description;
   private String name;
-  private HashMap<Entry<String, String>, Station> exits; // stores exits of this station
+  private Exits exits; // stores exits of this station
   private Inventory items; // stores items in this station
 
   /**
@@ -31,7 +27,7 @@ public class Station {
   public Station(String description, String name) {
     this.description = description;
     this.name = name;
-    exits = new HashMap<>();
+    exits = new Exits();
     items = new Inventory(Integer.MAX_VALUE); // stations can have unlimited items
   }
 
@@ -42,7 +38,7 @@ public class Station {
    * @param neighbor The station to which the exit leads.
    */
   public void setExit(String direction, String line, Station neighbor) {
-    exits.put(new SimpleEntry<>(direction.toLowerCase(), line.toLowerCase()), neighbor);
+    exits.setExit(direction, line, neighbor);
   }
 
   /**
@@ -59,16 +55,7 @@ public class Station {
    * @return Details of the station's exits.
    */
   private String getExitString() {
-		// add lines one can take
-    String returnString = "You can take the following lines:";
-
-    for (Entry<String, String> exit : exits.keySet()) {
-      returnString += "\n  " +
-				capitalizeFirstLetter(exit.getKey()) + " " +
-				capitalizeFirstLetter(exit.getValue()) + " line,";
-    }
-
-    return returnString.substring(0, returnString.length() - 1) + ".";
+		return exits.toString();
   }
 
   /**
@@ -114,15 +101,8 @@ public class Station {
    * @return The station in the given direction.
    */
   public Station getExit(String direction, String line) {
-    return exits.get(new SimpleEntry<>(direction.toLowerCase(), line.toLowerCase()));
+    return exits.getExit(direction, line);
   }
-
-  /**
-   * Capitalize the first letter of a given string.
-   */
-	private String capitalizeFirstLetter(String str) {
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
 
   /**
    * @return The name of the station.

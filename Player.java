@@ -73,6 +73,6 @@ public class Player {
    * @return The inventory of the player as its string representation.
    */
   public String getInventory() {
-    return inventory.toString();
+    return "Inventory:" + inventory.toString();
   }
 }

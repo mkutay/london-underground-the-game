@@ -1,7 +1,7 @@
 You are currently at Oxford Circus station.
 Oxford Circus
-You are currently at Picadilly Circus station.
-Picadilly Circus
+You are currently at Piccadilly Circus station.
+Piccadilly Circus
 You are currently at Leicester Square station.
 Leicester Square
 You are currently at Covent Garden station.

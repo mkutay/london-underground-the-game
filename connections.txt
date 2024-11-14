@@ -1,10 +1,10 @@
 Oxford Circus
-Picadilly Circus
+Piccadilly Circus
 Bakerloo
 Southbound
 Northbound
 
-Picadilly Circus
+Piccadilly Circus
 Embankment
 Bakerloo
 Southbound
@@ -64,21 +64,21 @@ Jubilee
 Eastbound
 Westbound
 
-Picadilly Circus
+Piccadilly Circus
 Leicester Square
-Picadilly
+Piccadilly
 Eastbound
 Westbound
 
 Leicester Square
 Covent Garden
-Picadilly
+Piccadilly
 Eastbound
 Westbound
 
 Covent Garden
 Holborn
-Picadilly
+Piccadilly
 Eastbound
 Westbound
 
