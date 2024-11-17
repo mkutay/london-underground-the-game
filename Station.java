@@ -1,3 +1,5 @@
+import java.util.Map.Entry;
+
 /**
  * A "Station" represents one location in the scenery of the game. It is 
  * connected to other stations via lines (that is exits).
@@ -67,6 +69,15 @@ public class Station {
    */
   public void addItem(Item item) {
     items.addItem(item);
+  }
+
+  /**
+   * Use an item in the station.
+   * @param item The item to be used.
+   * @return true if the item was used successfully, false otherwise.
+   */
+  public Entry<Boolean, String> useItem(Item item) {
+    return item.use(this);
   }
 
   /**

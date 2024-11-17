@@ -56,7 +56,7 @@ public class Player {
   }
 
   /**
-   * Get an item from the inventory with the given name.
+   * @return an item from the inventory with the given name, null if it doesn't exist.
    */
   public Item getItem(String itemName) {
     return inventory.getItem(itemName);
@@ -65,7 +65,7 @@ public class Player {
   /**
    * Drop an item from the inventory.
    */
-  public void dropItem(Item item) {
+  public void removeItem(Item item) {
     inventory.removeItem(item);
   }
 

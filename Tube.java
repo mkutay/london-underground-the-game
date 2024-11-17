@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.AbstractMap.SimpleEntry;
 
 /**
  * This class represents the tube map. It creates all the stations and links them together.
@@ -47,9 +48,15 @@ public class Tube {
    * Create the items that are placed in the stations.
    */
   private void createItems() {
+    UseEffectFunction oysterEffect = (station) -> {
+      if (station.getName().equals("Temple")) {
+        return new SimpleEntry<Boolean, String>(true, "You have exited the Temple station. You have successfully completed the game! Congratulations!");
+      }
+      return new SimpleEntry<Boolean, String>(false, "You cannot use the Oyster card here. It has no effect.");
+    };
     for (Station station : stations) {
       if (station.getName().equals("Bank")) {
-        station.addItem(new Item("Oyster", "A card that allows you to travel in and out on the London Underground.", 1));
+        station.addItem(new Item("Oyster", "A card that allows you to travel in and out on the London Underground.", 1, oysterEffect));
       }
     }
   }

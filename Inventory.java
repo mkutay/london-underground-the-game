@@ -41,7 +41,7 @@ public class Inventory {
 
   /**
    * @param itemName The name of the item.
-   * @return The item with the given name.
+   * @return The item with the given name, null if it doesn't exist
    */
   public Item getItem(String itemName) {
     itemName = itemName.toLowerCase();

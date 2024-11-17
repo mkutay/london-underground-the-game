@@ -12,7 +12,7 @@ You are currently at Chancery Lane station. Don't forget to do your studies at M
 Chancery Lane
 You are currently at Embankment station.
 Embankment
-You are currently at Temple station. Check out the old tube map outside of the station.
+You are currently at Temple station. There are gates that you can use read your Oyster card to leave the underground.
 Temple
 You are currently at Blackfriars station.
 Blackfriars

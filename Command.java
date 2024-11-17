@@ -40,7 +40,10 @@ public class Command {
    * @return true if this command was not understood.
    */
   public boolean isUnknown() {
-    return !hasIndex(0) || words.get(0) == null;
+    if (!hasIndex(0) || words.get(0) == null) {
+      return true;
+    }
+    return false;
   }
 }
 

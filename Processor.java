@@ -1,3 +1,6 @@
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Map.Entry;
+
 /**
  * This class is the processor class of the Game.
  * It processes the commands entered by the user and
@@ -111,10 +114,71 @@ public class Processor {
       return "You do not have " + word2 + " in your inventory.";
     }
 
-    player.dropItem(item);
+    player.removeItem(item);
     player.getCurrentStation().addItem(item);
 
     return "You have dropped " + item.getName() + " in your location.";
+  }
+
+  /**
+   * Process the "use" command, allowing the player to use an item from
+   * their inventory.
+   * @return String to be outputed to System.out
+   */
+  public Entry<Boolean, String> use(Command command) {
+    if (!command.hasIndex(1) || command.hasIndex(2)) {
+      return new SimpleEntry<Boolean, String>(false, incorrectFormat());
+    }
+
+    String word2 = command.getWord(1);
+    Item item = player.getItem(word2);
+
+    if (item == null) {
+      return new SimpleEntry<Boolean, String>(false, "You do not have " + word2 + " in your inventory.");
+    }
+
+    Entry<Boolean, String> used = player.getCurrentStation().useItem(item);
+
+    if (used.getKey()) {
+      player.removeItem(item);
+    }
+
+    return used;
+  }
+
+  /**
+   * Process the "give" command, allowing the player to give an item from
+   * their inventory to a character.
+   * @return String to be outputed to System.out
+   */
+  public String give(Command command) {
+    if (!command.hasIndex(1) || !command.hasIndex(2)) {
+      return incorrectFormat();
+    }
+
+    String word2 = command.getWord(1);
+    String word3 = command.getWord(2);
+    Item item = player.getItem(word2);
+
+    if (item == null) {
+      return "You do not have " + word2 + " in your inventory.";
+    }
+
+    return null;
+  }
+
+  /**
+   * Process the "talk" command, allowing the player to talk with a character.
+   * @return String to be outputed to System.out
+   */
+  public String talk(Command command) {
+    if (!command.hasIndex(1) || command.hasIndex(2)) {
+      return incorrectFormat();
+    }
+
+    String word2 = command.getWord(1);
+
+    return null;
   }
 
   /**

@@ -1,14 +1,16 @@
+import java.util.Map.Entry;
+
 /**
  * This class is the main class of the "London Underground" application. 
- * "World of Zuul" is a very simple, text based adventure game. Users
+ * "London Underground" is a very simple, text based adventure game. Players
  * can walk around some of the underground stations in central London,
  * pick up and drop items, and try to find a way out of the stations.
  * 
  * This main class creates and initialises the parser and the processor,
- * which are used to read and process the user commands. It also creates
+ * which are used to read and process the user commands. It also initiates
  * the game loop.
  * 
- * @author  Michael Kölling, David J. Barnes, Mehmet Kutay Bozkurt
+ * @author  Michael Kölling, David J. Barnes, and Mehmet Kutay Bozkurt
  * @version 1.0
  */
 
@@ -60,6 +62,8 @@ public class Game {
    * @return true if the command ends the game, false otherwise.
    */
   private boolean processCommand(Command command) {
+    System.out.println();
+
     if (command.isUnknown()) {
       System.out.println("I don't know what you mean. Try typing \"help\" for more information.");
       return false;
@@ -67,9 +71,8 @@ public class Game {
 
     String commandWord = command.getWord(0).toLowerCase();
 
-    System.out.println();
-
     String output = null;
+    boolean endGame = false;
 
     // the processor returns Strings to be printed out
     if (commandWord.equals("help")) {
@@ -86,6 +89,14 @@ public class Game {
       output = processor.drop(command);
     } else if (commandWord.equals("inventory")) {
       output = processor.inventory(command);
+    } else if (commandWord.equals("use")) {
+      Entry<Boolean, String> foo = processor.use(command);
+      output = foo.getValue();
+      endGame = foo.getKey();
+    } else if (commandWord.equals("give")) {
+      output = processor.give(command);
+    } else if (commandWord.equals("talk")) {
+      output = processor.talk(command);
     }
 
     if (output == null) {
@@ -93,8 +104,8 @@ public class Game {
       return true;
     }
 
-    System.out.println(output); 
-    return false;
+    System.out.println(output);
+    return endGame;
   }
 
   /**
