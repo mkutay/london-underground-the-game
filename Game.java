@@ -73,7 +73,7 @@ public class Game {
 
     // the processor returns Strings to be printed out
     if (commandWord.equals("help")) {
-      printHelp(command);
+      output = printHelp(command);
     } else if (commandWord.equals("back")) {
       output = processor.back(command);
     } else if (commandWord.equals("take")) {
@@ -92,7 +92,8 @@ public class Game {
       System.out.println("Thank you for playing. Good Bye!");
       return true;
     }
-    
+
+    System.out.println(output); 
     return false;
   }
 
@@ -101,22 +102,17 @@ public class Game {
    * followed by a command, it will print out the description of that command.
    * @param command The help command to be processed
    */
-  private void printHelp(Command command) {
+  private String printHelp(Command command) {
     if (command.hasIndex(1)) {
       String word = command.getWord(1);
       String description = parser.getCommandDescription(word);
 
       if (description == null) {
-        System.out.println("I don't know what you mean.");
-      } else {
-        System.out.println(description);
+        return "I don't know what you mean.";
       }
-
-      return;
+      return description;
     }
 
-    System.out.println("You lost your Oyster card during your commute to work. You should find it before leaving the London Underground.\n");
-    System.out.println("Your command words are:");
-    System.out.println(parser.getCommands());
+    return "You lost your Oyster card during your commute to work. You should find it before leaving the London Underground.\n\n" + "Your command words are:\n" + parser.getCommands();
   }
 }
