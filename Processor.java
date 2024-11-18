@@ -55,10 +55,10 @@ public class Processor {
     characters.addCharacter(staff);
 
     ArrayList<Station> piccadillyStationList = new ArrayList<>();
+    piccadillyStationList.add(tube.getStation("Holborn"));
     piccadillyStationList.add(tube.getStation("Piccadilly Circus"));
     piccadillyStationList.add(tube.getStation("Leicester Square"));
     piccadillyStationList.add(tube.getStation("Covent Garden"));
-    piccadillyStationList.add(tube.getStation("Holborn"));
     Entry<Item, Item> exchangeHomeless = new SimpleEntry<Item, Item>(null, money);
     Character homeless = new Character("Homeless", "I see that you are lost on the underground. Take this money. It may help you leave the station.", piccadillyStationList, exchangeHomeless);
     characters.addCharacter(homeless);
@@ -297,8 +297,11 @@ public class Processor {
   public String getDescriptionString() {
     Station currentStation = player.getCurrentStation();
     Characters charactersOnStation = characters.getCharactersOnStation(currentStation);
-
-    return currentStation.getDescription() + "\n\n" + charactersOnStation.toString();
+    String returnString = currentStation.getDescription();
+    if (!charactersOnStation.isEmpty()) {
+      returnString += "\n\n" + charactersOnStation.toString();
+    }
+    return returnString;
   }
 
   /**

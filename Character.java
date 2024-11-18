@@ -65,6 +65,10 @@ public class Character {
     return description;
   }
 
+  /**
+   * Talk with the character and get an item if possible.
+   * @return Item if the character gives an item for free, null otherwise.
+   */
   public Item talkWith() {
     if (exchange != null && exchange.getKey() == null) {
       inventory.removeItem(exchange.getValue());

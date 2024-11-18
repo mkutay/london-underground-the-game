@@ -14,6 +14,13 @@ public class Characters {
   }
 
   /**
+   * @return true if the list is empty, false otherwise.
+   */
+  public boolean isEmpty() {
+    return characters.isEmpty();
+  }
+
+  /**
    * Add a character to the list. 
    */
   public void addCharacter(Character character) {
@@ -38,10 +45,12 @@ public class Characters {
   public void moveCharacters() {
     for (Character character : characters) {
       character.moveRandom();
-      System.out.println(character.getName() + " is now at " + character.getCurrentStation().getName());
     }
   }
 
+  /**
+   * @return the characters that are on the given station as a Characters object
+   */
   public Characters getCharactersOnStation(Station station) {
     Characters charactersOnStation = new Characters();
     for (Character character : characters) {
@@ -52,7 +61,13 @@ public class Characters {
     return charactersOnStation;
   }
 
+  /**
+   * @return the characters that are on the given station as a String
+   */
   public String toString() {
+    if (characters.isEmpty()) {
+      return "";
+    }
     String characterString = "You also find the following characters in the station:";
     for (Character character : characters) {
       characterString += "\n  " + character.getName();
