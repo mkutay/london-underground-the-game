@@ -1,6 +1,7 @@
 import java.util.AbstractMap.SimpleEntry;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Random;
 
 /**
  * This class represents the exits of a station, stroing them in a hashmap.
@@ -75,9 +76,12 @@ public class Exits {
   }
 
   /**
+   * The following code was taken from https://stackoverflow.com/questions/929554/is-there-a-way-to-get-the-value-of-a-hashmap-randomly-in-java
    * @return A random exit from the exits of a station.
    */
   public Station getRandomExit() {
-    return exits.values().stream().findAny().get();
+    Random generator = new Random();
+    Object[] values = exits.values().toArray();
+    return (Station) values[generator.nextInt(values.length)];
   }
 }

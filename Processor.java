@@ -27,7 +27,7 @@ public class Processor {
    * Create the characters in the game.
    */
   private void createCharacters() {
-    Item oysterCard = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, new UseEffectFunction() {
+    Item oyster = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, new UseEffectFunction() {
       public Entry<Boolean, String> use(Station station) {
         if (station.getName().equals("Bank")) {
           return new SimpleEntry<Boolean, String>(true, "You have left the underground. Congratulations! You have won the game.");
@@ -43,7 +43,11 @@ public class Processor {
       }
     });
 
-    tube.getStation("Bank").addItem(oysterCard);
+    Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 1, new UseEffectFunction() {
+      public Entry<Boolean, String> use(Station station) {
+        return new SimpleEntry<Boolean, String>(true, "You have eaten the candy.");
+      }
+    });
 
     ArrayList<Station> bankStationList = new ArrayList<>();
     bankStationList.add(tube.getStation("Bank"));
@@ -55,9 +59,24 @@ public class Processor {
     piccadillyStationList.add(tube.getStation("Leicester Square"));
     piccadillyStationList.add(tube.getStation("Covent Garden"));
     piccadillyStationList.add(tube.getStation("Holborn"));
-    Entry<Item, Item> exchange = new SimpleEntry<Item, Item>(null, money);
-    Character homeless = new Character("Homeless", "I see that you are lost on the underground. Take this money. It may help you leave the station.", piccadillyStationList, exchange);
+    Entry<Item, Item> exchangeHomeless = new SimpleEntry<Item, Item>(null, money);
+    Character homeless = new Character("Homeless", "I see that you are lost on the underground. Take this money. It may help you leave the station.", piccadillyStationList, exchangeHomeless);
     characters.addCharacter(homeless);
+
+    ArrayList<Station> candyManStation = new ArrayList<>();
+    candyManStation.add(tube.getStation("Oxford Circus"));
+    Entry<Item, Item> exchangeCandyMan = new SimpleEntry<Item, Item>(money, candy);
+    Character candyMan = new Character("CandyMan", "Hey I am CandyMan! Would you like to buy some very reasonably priced candy?", candyManStation, exchangeCandyMan);
+    characters.addCharacter(candyMan);
+
+    ArrayList<Station> districtStationList = new ArrayList<>();
+    districtStationList.add(tube.getStation("Embankment"));
+    districtStationList.add(tube.getStation("Temple"));
+    districtStationList.add(tube.getStation("Blackfriars"));
+    districtStationList.add(tube.getStation("Bank"));
+    Entry<Item, Item> exchangeChild = new SimpleEntry<Item, Item>(candy, oyster);
+    Character child = new Character("Child", "Hey, I want some candy! Do you have some candy?", districtStationList, exchangeChild);
+    characters.addCharacter(child);
   }
 
   /** 

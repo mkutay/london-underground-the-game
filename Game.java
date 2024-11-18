@@ -64,7 +64,7 @@ public class Game {
   private boolean processCommand(Command command) {
     System.out.println();
 
-    if (command.isUnknown()) {
+    if (command == null || command.isUnknown()) {
       System.out.println("I don't know what you mean. Try typing \"help\" for more information.");
       return false;
     }

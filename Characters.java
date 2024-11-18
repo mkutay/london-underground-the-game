@@ -38,6 +38,7 @@ public class Characters {
   public void moveCharacters() {
     for (Character character : characters) {
       character.moveRandom();
+      System.out.println(character.getName() + " is now at " + character.getCurrentStation().getName());
     }
   }
 

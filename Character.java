@@ -66,7 +66,7 @@ public class Character {
   }
 
   public Item talkWith() {
-    if (exchange.getKey() == null) {
+    if (exchange != null && exchange.getKey() == null) {
       inventory.removeItem(exchange.getValue());
       return exchange.getValue();
     }
@@ -77,8 +77,15 @@ public class Character {
    * Move the character to a random exit that is allowed.
    */
   public void moveRandom() {
-    do {
-      currentStation = currentStation.getRandomExit();
-    } while (!allowedStations.contains(currentStation));
+    int randomNum = (int) (Math.random() * 10);
+    if (allowedStations.size() == 1 || randomNum < 4) { // 40% chance that the character stays
+      return;
+    }
+
+    Station nextStation = currentStation.getRandomExit();
+    while (!allowedStations.contains(nextStation)) {
+      nextStation = currentStation.getRandomExit();
+    }
+    currentStation = nextStation;
   }
 }
