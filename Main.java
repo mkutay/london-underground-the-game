@@ -4,3 +4,5 @@ public class Main {
     game.play();
   }
 }
+
+// tautologies are not “accidentally” true just because we happen to live in world described by a certain model

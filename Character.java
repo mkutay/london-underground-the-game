@@ -13,18 +13,19 @@ public class Character {
   private String name;
   private String description;
   private ArrayList<Station> allowedStations;
-  private ArrayList<Entry<Item, Item>> exchanges; // items that the character exchanges with the player
+  private Entry<Item, Item> exchange; // gain key, lose value
   
   /**
    * Constructor for the player class.
    * @param startStation The station where the player starts.
    */
-  public Character(String name, String description, ArrayList<Station> allowedStations) {
+  public Character(String name, String description, ArrayList<Station> allowedStations, Entry<Item, Item> exchange) {
     inventory = new Inventory(10);
     this.name = name;
     this.description = description;
     this.allowedStations = allowedStations;
     currentStation = allowedStations.get(0);
+    this.exchange = exchange;
   }
 
   /**
@@ -35,10 +36,10 @@ public class Character {
   }
 
   public Item exchangeItem(Item item) {
-    for (Entry<Item, Item> exchange : exchanges) {
-      if (exchange.getKey().equals(item)) {
-        return exchange.getValue();
-      }
+    if (item.equals(exchange.getKey())) {
+      inventory.addItem(item);
+      inventory.removeItem(exchange.getValue());
+      return exchange.getValue();
     }
     return null;
   }
@@ -62,6 +63,14 @@ public class Character {
    */
   public String getDescription() {
     return description;
+  }
+
+  public Item talkWith() {
+    if (exchange.getKey() == null) {
+      inventory.removeItem(exchange.getValue());
+      return exchange.getValue();
+    }
+    return null;
   }
 
   /**

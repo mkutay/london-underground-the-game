@@ -40,4 +40,22 @@ public class Characters {
       character.moveRandom();
     }
   }
+
+  public Characters getCharactersOnStation(Station station) {
+    Characters charactersOnStation = new Characters();
+    for (Character character : characters) {
+      if (character.getCurrentStation().equals(station)) {
+        charactersOnStation.addCharacter(character);
+      }
+    }
+    return charactersOnStation;
+  }
+
+  public String toString() {
+    String characterString = "You also find the following characters in the station:";
+    for (Character character : characters) {
+      characterString += "\n  " + character.getName();
+    }
+    return characterString;
+  }
 }

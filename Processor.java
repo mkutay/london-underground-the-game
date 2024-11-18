@@ -27,9 +27,27 @@ public class Processor {
    * Create the characters in the game.
    */
   private void createCharacters() {
+    Item oysterCard = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, new UseEffectFunction() {
+      public Entry<Boolean, String> use(Station station) {
+        if (station.getName().equals("Bank")) {
+          return new SimpleEntry<Boolean, String>(true, "You have left the underground. Congratulations! You have won the game.");
+        }
+
+        return new SimpleEntry<Boolean, String>(false, "You cannot use the Oyster card here.");
+      }
+    });
+
+    Item money = new Item("Money", "Some money that you can use to buy things.", 1, new UseEffectFunction() {
+      public Entry<Boolean, String> use(Station station) {
+        return new SimpleEntry<Boolean, String>(false, "You cannot use the money here.");
+      }
+    });
+
+    tube.getStation("Bank").addItem(oysterCard);
+
     ArrayList<Station> bankStationList = new ArrayList<>();
     bankStationList.add(tube.getStation("Bank"));
-    Character staff = new Character("Staff", "Did you know that you can take the Waterloo & City line at Bank station to teleport to a random station on the underground?", bankStationList);
+    Character staff = new Character("Staff", "Did you know that you can take the Waterloo & City line at Bank station to teleport to a random station on the underground?", bankStationList, null);
     characters.addCharacter(staff);
 
     ArrayList<Station> piccadillyStationList = new ArrayList<>();
@@ -37,7 +55,8 @@ public class Processor {
     piccadillyStationList.add(tube.getStation("Leicester Square"));
     piccadillyStationList.add(tube.getStation("Covent Garden"));
     piccadillyStationList.add(tube.getStation("Holborn"));
-    Character homeless = new Character("Homeless", "I see that you are lost on the underground. Take this note. It may help you leave the station.", piccadillyStationList);
+    Entry<Item, Item> exchange = new SimpleEntry<Item, Item>(null, money);
+    Character homeless = new Character("Homeless", "I see that you are lost on the underground. Take this money. It may help you leave the station.", piccadillyStationList, exchange);
     characters.addCharacter(homeless);
   }
 
@@ -56,7 +75,7 @@ public class Processor {
     }
 
     player.popBackStack();
-    return getCurrentExits();
+    return getDescriptionString();
   }
 
   /**
@@ -89,7 +108,9 @@ public class Processor {
     }
 
     player.pushBackStack(nextStation);
-    return getCurrentExits();
+    characters.moveCharacters(); // move the characters to a random station that they are allowed to go to
+
+    return getDescriptionString();
   }
 
   /**
@@ -212,7 +233,21 @@ public class Processor {
 
     String word2 = command.getWord(1);
 
-    return null;
+    Character character = characters.getCharacter(word2);
+    if (character == null) {
+      return "There is no character with the name " + word2 + ".";
+    }
+
+    Item givenItem = character.talkWith();
+    
+    String returnString = character.getDescription();
+
+    if (givenItem != null) {
+      player.addItem(givenItem);
+      returnString += "\n\nYou have received " + givenItem.getName() + " from " + character.getName() + ".";
+    }
+
+    return returnString;
   }
 
   /**
@@ -240,11 +275,11 @@ public class Processor {
     return null; // signal that we want to quit
   }
 
-  /**
-   * @return the current exits of the player's current station as a String.
-   */
-  public String getCurrentExits() {
-    return player.getCurrentStation().getDescription();
+  public String getDescriptionString() {
+    Station currentStation = player.getCurrentStation();
+    Characters charactersOnStation = characters.getCharactersOnStation(currentStation);
+
+    return currentStation.getDescription() + "\n\n" + charactersOnStation.toString();
   }
 
   /**
