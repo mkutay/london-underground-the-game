@@ -103,4 +103,17 @@ public class Tube {
     int randomIndex = (int) (Math.random() * (stations.size() - 1));
     return stations.get(randomIndex);
   }
+
+  /**
+   * @param name The name of the station.
+   * @return The station with the given name.
+   */
+  public Station getStation(String name) {
+    for (Station station : stations) {
+      if (station.getName().equals(name)) {
+        return station;
+      }
+    }
+    return null;
+  }
 }

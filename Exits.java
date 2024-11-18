@@ -73,4 +73,11 @@ public class Exits {
     }
     return returnStation;
   }
+
+  /**
+   * @return A random exit from the exits of a station.
+   */
+  public Station getRandomExit() {
+    return exits.values().stream().findAny().get();
+  }
 }

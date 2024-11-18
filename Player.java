@@ -51,7 +51,7 @@ public class Player {
   /**
    * Add a picked item to the inventory.
    */
-  public boolean pickItem(Item item) {
+  public boolean addItem(Item item) {
     return inventory.addItem(item);
   }
 

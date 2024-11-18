@@ -114,4 +114,11 @@ public class Station {
   public String getName() {
     return name;
   }
+
+  /**
+   * @return A random exit from the station.
+   */
+  public Station getRandomExit() {
+    return exits.getRandomExit();
+  }
 }

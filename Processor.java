@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
@@ -12,10 +13,32 @@ import java.util.Map.Entry;
 public class Processor {
   private Tube tube;
   private Player player;
+  private Characters characters;
 
   public Processor() {
     tube = new Tube();
     player = new Player(tube.getStartStation());
+    characters = new Characters();
+
+    createCharacters(); // initialise the characters
+  }
+
+  /**
+   * Create the characters in the game.
+   */
+  private void createCharacters() {
+    ArrayList<Station> bankStationList = new ArrayList<>();
+    bankStationList.add(tube.getStation("Bank"));
+    Character staff = new Character("Staff", "Did you know that you can take the Waterloo & City line at Bank station to teleport to a random station on the underground?", bankStationList);
+    characters.addCharacter(staff);
+
+    ArrayList<Station> piccadillyStationList = new ArrayList<>();
+    piccadillyStationList.add(tube.getStation("Piccadilly Circus"));
+    piccadillyStationList.add(tube.getStation("Leicester Square"));
+    piccadillyStationList.add(tube.getStation("Covent Garden"));
+    piccadillyStationList.add(tube.getStation("Holborn"));
+    Character homeless = new Character("Homeless", "I see that you are lost on the underground. Take this note. It may help you leave the station.", piccadillyStationList);
+    characters.addCharacter(homeless);
   }
 
   /** 
@@ -57,9 +80,7 @@ public class Processor {
         return "There is more than one possible exits. Please be more specific";
       }
 
-      return "You cannot take " +
-        capitalizeFirstLetter(word2) + " " +
-        capitalizeFirstLetter(word3) + " line.";
+      return "You cannot take " + word3 + " " + word3 + " line.";
     }
 
     // if we're at the invisible "Random" station, get an actual random station
@@ -89,7 +110,7 @@ public class Processor {
     }
 
     // pickItem returns true if the item was picked up (that is if it was light enough)
-    if (player.pickItem(item)) {
+    if (player.addItem(item)) {
       player.getCurrentStation().removeItem(item);
       return "You have picked up " + item.getName() + ".";
     }
@@ -123,7 +144,7 @@ public class Processor {
   /**
    * Process the "use" command, allowing the player to use an item from
    * their inventory.
-   * @return String to be outputed to System.out
+   * @return Boolean indicating quit sequence and String to be outputed to System.out
    */
   public Entry<Boolean, String> use(Command command) {
     if (!command.hasIndex(1) || command.hasIndex(2)) {
@@ -158,13 +179,26 @@ public class Processor {
 
     String word2 = command.getWord(1);
     String word3 = command.getWord(2);
-    Item item = player.getItem(word2);
 
+    Item item = player.getItem(word2);
     if (item == null) {
       return "You do not have " + word2 + " in your inventory.";
     }
 
-    return null;
+    Character character = characters.getCharacter(word3);
+    if (character == null) {
+      return "There is no character with the name " + word3 + ".";
+    }
+
+    Item exchangedItem = character.exchangeItem(item);
+    if (exchangedItem == null) {
+      return "The character does not want " + item.getName() + ".";
+    }
+
+    player.removeItem(item);
+    player.addItem(exchangedItem);
+
+    return "You have given " + item.getName() + " and received " + exchangedItem.getName() + " in exchange.";
   }
 
   /**
@@ -212,13 +246,6 @@ public class Processor {
   public String getCurrentExits() {
     return player.getCurrentStation().getDescription();
   }
-
-  /**
-   * Capitalize the first letter of a given string.
-   */
-  private String capitalizeFirstLetter(String str) {
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
 
   /**
    * @return a String indicating that the input has incorrect format.
