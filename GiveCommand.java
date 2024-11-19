@@ -15,7 +15,7 @@ public class GiveCommand implements CommandAction {
     String characterName = command.getWord(1);
     String itemName = command.getWord(2);
 
-    Character character = processor.getCharacters().getCharacter(characterName.toLowerCase()); // the character with name characterName.
+    Character character = processor.getCharacter(characterName.toLowerCase()); // the character with name characterName.
     if (character == null) {
       return "There is no character with the name " + characterName + ".";
     }

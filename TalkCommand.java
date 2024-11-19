@@ -12,12 +12,12 @@ public class TalkCommand implements CommandAction {
 
     String characterName = command.getWord(1);
 
-    Character character = processor.getCharacters().getCharacter(characterName.toLowerCase());
+    Character character = processor.getCharacter(characterName.toLowerCase());
     if (character == null) {
       return "There is no character with the name " + characterName + ".";
     }
 
-    Item givenItem = character.talkWith();
+    Item givenItem = character.exchangeItem(null);
     String returnString = character.getDialogue();
 
     if (givenItem != null) {

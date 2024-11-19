@@ -21,7 +21,7 @@ public class Player {
   public Player(Station startStation) {
     backStack = new Stack<Station>();
     backStack.push(startStation);
-    inventory = new Inventory(10); // The player can carry up to 10 pounds.
+    inventory = new Inventory(10); // The player can carry up to 10 lbs.
   }
 
   /**

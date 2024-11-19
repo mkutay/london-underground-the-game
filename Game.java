@@ -51,7 +51,7 @@ public class Game {
     System.out.println("You should find it before you leave the underground.");
     System.out.println("Type \"help\" if you need help.");
     System.out.println();
-    System.out.println(processor.getStationDescription());
+    System.out.println(processor.getDescription());
   }
 
   /**
