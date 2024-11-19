@@ -4,7 +4,10 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 /**
- * This class represents the exits of a station, stroing them in a hashmap.
+ * This class is the Exits class of the "London Underground" application. 
+ * "London Underground" is a simple, text based adventure game.
+ * 
+ * This class represents the exits of an arbitrary station, storing them in a hashmap.
  * 
  * @author Mehmet Kutay Bozkurt
  * @version 1.0

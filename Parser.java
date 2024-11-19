@@ -11,15 +11,15 @@ import java.util.Scanner;
  * the known commands, and if the input is not one of the known commands, it
  * returns a command object that is marked as an unknown command.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Michael Kölling, David J. Barnes, and Mehmet Kutay Bozkurt
+ * @version 1.0
  */
 public class Parser  {
   private CommandWords commands; // holds all valid command words
   private Scanner reader; // source of command input
 
   /**
-   * Create a parser to read from the terminal window.
+   * Contructor - Create a parser to read from the terminal window.
    */
   public Parser() {
     commands = new CommandWords();
@@ -29,7 +29,7 @@ public class Parser  {
   /**
    * @return The next command from the user.
    */
-  public Command getCommand() {
+  public Command getNextCommand() {
     String inputLine; // will hold the full input line
     ArrayList<String> words = new ArrayList<>();
 
@@ -37,18 +37,20 @@ public class Parser  {
 
     inputLine = reader.nextLine();
 
-    // find up each word from the line
+    // find each word from the line and add them to the list
     try (Scanner tokenizer = new Scanner(inputLine)) {
       while (tokenizer.hasNext()) {
         words.add(tokenizer.next()); // get the next word
       }
     }
 
-    if (words.size() == 0) return null;
+    if (words.isEmpty()) {
+      return new Command(words);
+    }
 
-    // Now check whether this word is known. If so, create a command
-    // with it. If not, create a "null" command (for unknown command).
-    if (commands.isCommand(words.get(0))) {
+    // Now check whether the first word interpreted as a command is known.
+    // If so, create a command with it. If not, create a "null" command (for unknown command).
+    if (commands.isValidCommand(words.get(0))) {
       return new Command(words);
     } else {
       words.set(0, null);
@@ -57,14 +59,14 @@ public class Parser  {
   }
 
   /**
-   * @return a list of valid command words as String.
+   * @return A list of valid command words as String.
    */
-  public String getCommands() {
-    return commands.getAll();
+  public String getEveryCommand() {
+    return commands.getEveryCommand();
   }
 
   /**
-   * @return the description of a command.
+   * @return The description of a command.
    */
   public String getCommandDescription(String command) {
     return commands.getCommandDescription(command);

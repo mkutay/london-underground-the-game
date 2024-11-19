@@ -1,6 +1,9 @@
 import java.util.Map.Entry;
 
 /**
+ * This class is the Station class of the "London Underground" application. 
+ * "London Underground" is a simple, text based adventure game.
+ * 
  * A "Station" represents one location in the scenery of the game. It is 
  * connected to other stations via lines (that is exits).
  * 
