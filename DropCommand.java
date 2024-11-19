@@ -14,14 +14,14 @@ public class DropCommand implements CommandAction {
     Player player = processor.getPlayer();
 
     String itemName = command.getWord(1);
-    Item item = player.getItem(itemName);
+    Item item = player.getInventory().getItem(itemName);
 
     if (item == null) {
       return "You do not have " + itemName + " in your inventory.";
     }
 
-    player.removeItem(item);
-    player.getCurrentStation().addItem(item);
+    player.getInventory().removeItem(item);
+    player.getCurrentStation().getItems().addItem(item);
 
     return "You have dropped " + item.getName() + " in your location.";
   }

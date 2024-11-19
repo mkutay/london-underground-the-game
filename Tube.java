@@ -2,13 +2,14 @@ import java.util.ArrayList;
 
 /**
  * This class represents the tube map. It creates all the stations and links them together.
- * It also creates the items that are placed in the stations.
+ * The tube map is read from the stations.txt and connections.txt files.
+ * 
  * @author Mehmet Kutay Bozkurt
  * @version 1.0
  */
 public class Tube {
   private ArrayList<Station> stations;
-  Reader reader; // helper to read from files
+  private Reader reader; // helper to read from files
   
   /**
    * Constructory - Initialise the tube by creating the stations and linking them together.
@@ -73,13 +74,6 @@ public class Tube {
       // This should not run, but is used as a precaution.
       System.out.println("ERROR: station(s) not found: " + name1 + ", " + name2);
     }
-  }
-
-  /**
-   * @return The predefined starting station of the game.
-   */
-  public Station getStartStation() {
-    return stations.get(1); // start the game at Piccadilly Circus
   }
 
   /**

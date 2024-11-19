@@ -49,11 +49,11 @@ public class Item {
   }
 
   /**
-   * Use the item, applying its effect to the given station.
+   * Use the item.
    * @return Boolean: True if the game finishes, false otherwise.
    *         String: The message to be displayed to the user.
    */
-  public Entry<Boolean, String> use(Station station) {
-    return effect.use(station);
+  public Entry<Boolean, String> use(String stationName) {
+    return effect.use(stationName);
   }
 }

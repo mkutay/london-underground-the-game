@@ -15,14 +15,14 @@ public class UseCommand implements CommandAction {
     Player player = processor.getPlayer();
     String itemName = command.getWord(1);
 
-    Item item = player.getItem(itemName);
+    Item item = player.getInventory().getItem(itemName);
     if (item == null) {
       return "You do not have " + itemName + " in your inventory.";
     }
 
-    Entry<Boolean, String> used = player.getCurrentStation().useItem(item);
+    Entry<Boolean, String> used = item.use(player.getCurrentStation().getName());
     if (used.getKey()) { // the key is true if the item was used
-      player.removeItem(item);
+      player.getInventory().removeItem(item);
     }
 
     // Check if the game has ended after using the item (that is if the player has won by using the Oyster card)

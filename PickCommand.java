@@ -13,14 +13,14 @@ public class PickCommand implements CommandAction {
     Player player = processor.getPlayer();
     String itemName = command.getWord(1);
 
-    Item item = player.getCurrentStation().getItem(itemName);
+    Item item = player.getCurrentStation().getItems().getItem(itemName);
     if (item == null) {
       return "There is no " + itemName + " in this station.";
     }
 
     // addItem returns true if the item was picked up (that is if it was light enough)
-    if (player.addItem(item)) {
-      player.getCurrentStation().removeItem(item);
+    if (player.getInventory().addItem(item)) {
+      player.getCurrentStation().getItems().removeItem(item);
       return "You have picked up " + item.getName() + ".";
     }
 

@@ -20,7 +20,7 @@ public class GiveCommand implements CommandAction {
       return "There is no character with the name " + characterName + ".";
     }
 
-    Item item = player.getItem(itemName);
+    Item item = player.getInventory().getItem(itemName);
     if (item == null) {
       return "You do not have " + itemName + " in your inventory.";
     }
@@ -30,8 +30,8 @@ public class GiveCommand implements CommandAction {
       return "The character does not want " + item.getName() + ".";
     }
 
-    player.removeItem(item);
-    player.addItem(exchangedItem);
+    player.getInventory().removeItem(item);
+    player.getInventory().addItem(exchangedItem);
 
     return "You have given " + item.getName() + " and received " + exchangedItem.getName() + " in exchange.";
   }

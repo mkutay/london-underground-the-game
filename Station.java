@@ -1,5 +1,3 @@
-import java.util.Map.Entry;
-
 /**
  * This class is the Station class of the "London Underground" application. 
  * "London Underground" is a simple, text based adventure game.
@@ -65,38 +63,10 @@ public class Station {
   }
 
   /**
-   * Add an item to the station.
-   * @param item The item to be added.
+   * @return The items in the station.
    */
-  public void addItem(Item item) {
-    items.addItem(item);
-  }
-
-  /**
-   * Use an item in the station.
-   * @param item The item to be used.
-   * @return Boolean: true if the item was used successfully, false otherwise.
-   *         String: The message to be displayed to the user.
-   */
-  public Entry<Boolean, String> useItem(Item item) {
-    return item.use(this);
-  }
-
-  /**
-   * Remove an item from the station.
-   * @return True if the item was removed, false if the item doesn't exist.
-   */
-  public boolean removeItem(Item item) {
-    return items.removeItem(item);
-  }
-
-  /**
-   * Return the item with the given name.
-   * @param itemName The name of the item.
-   * @return The item with the given name.
-   */
-  public Item getItem(String itemName) {
-    return items.getItem(itemName);
+  public Inventory getItems() {
+    return items;
   }
 
   /**

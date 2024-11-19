@@ -23,7 +23,7 @@ public class Processor {
    */
   public Processor() {
     tube = new Tube();
-    player = new Player(tube.getStartStation());
+    player = new Player(tube.getStation("Piccadilly Circus"));
     characters = new Characters(tube);
 
     createCommandRegistry();

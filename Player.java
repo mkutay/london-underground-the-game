@@ -52,32 +52,9 @@ public class Player {
   }
 
   /**
-   * Add a picked item to the inventory.
-   * @param item The item to add.
-   * @return True if the item was added successfully, false otherwise.
+   * @return The inventory of the player.
    */
-  public boolean addItem(Item item) {
-    return inventory.addItem(item);
-  }
-
-  /**
-   * @return An item from the inventory with the given name, null if it doesn't exist.
-   */
-  public Item getItem(String itemName) {
-    return inventory.getItem(itemName);
-  }
-
-  /**
-   * Drop an item from the inventory.
-   */
-  public void removeItem(Item item) {
-    inventory.removeItem(item);
-  }
-
-  /**
-   * @return The inventory of the player as its string representation.
-   */
-  public String getInventory() {
-    return "Inventory:" + inventory.toString();
+  public Inventory getInventory() {
+    return inventory;
   }
 }

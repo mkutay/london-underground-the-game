@@ -10,6 +10,6 @@ public class InventoryCommand implements CommandAction {
       return processor.incorrectFormat();
     }
 
-    return processor.getPlayer().getInventory();
+    return "Inventory:" + processor.getPlayer().getInventory().toString();
   }
 }

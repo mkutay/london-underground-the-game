@@ -22,7 +22,7 @@ public class TalkCommand implements CommandAction {
 
     if (givenItem != null) {
       // Add the item to the player's inventory if the character straight up gives an item to the player.
-      processor.getPlayer().addItem(givenItem);
+      processor.getPlayer().getInventory().addItem(givenItem);
       returnString += "\n\nYou have received " + givenItem.getName() + " from " + character.getName() + ".";
     }
 

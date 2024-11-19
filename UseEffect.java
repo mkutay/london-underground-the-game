@@ -12,9 +12,9 @@ import java.util.Map.Entry;
 public interface UseEffect {
   /**
    * Use the item at the given station.
-   * @param station The station where the item is used.
+   * @param stationName The station name where the item is used.
    * @return Boolean: True if the game finishes, false otherwise.
    *         String: The message to be displayed to the user.
    */
-  Entry<Boolean, String> use(Station station);
+  Entry<Boolean, String> use(String stationName);
 }
