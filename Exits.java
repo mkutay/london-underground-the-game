@@ -15,6 +15,9 @@ import java.util.Random;
 public class Exits {
   private HashMap<Entry<String, String>, Station> exits; // stores exits of a station
 
+  /**
+   * Constructor - Create an Exits object with no exits.
+   */
   public Exits() {
     exits = new HashMap<>();
   }
@@ -34,42 +37,45 @@ public class Exits {
    * @return Details of the station's exits.
    */
   public String toString() {
-		// add lines one can take
     String returnString = "You can take the following lines:";
 
-    for (Entry<String, String> exit : exits.keySet()) {
+    for (Entry<String, String> exit : exits.keySet()) { // add lines one can take
       returnString += "\n  " +
 				capitalizeFirstLetter(exit.getKey()) + " " +
 				capitalizeFirstLetter(exit.getValue()) + " line,";
     }
 
+    // remove the last comma and add a period
     return returnString.substring(0, returnString.length() - 1) + ".";
   }
 
   /**
    * Capitalize the first letter of a given string.
+   * Used to make the output more readable.
    */
 	private String capitalizeFirstLetter(String str) {
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 
   /**
-   * Return the station that is reached if we go from this station in direction
+   * Return the station that is reached if we go in direction
    * "direction" with line "line". If there is no station in that direction, return null.
-   * If only word2 is given, look if there is only one exit to be taken with the given information,
-   * if yes, take it, if not, return null.
-   * @param word2 The exit's direction.
-   * @param word3 The exit's specific line.
+   * If only one variable is not null, look if there is only one exit to be taken with the given
+   * information, if yes, take it, if not, return null.
+   * @param direction The exit's direction. If "line" is null, this can also be interpreted as the exit's line.
+   * @param line The exit's specific line.
    * @return The station in the given direction, or null if it doesn't exist.
    */
-  public Station getExit(String word2, String word3) {
-    if (word3 != null) {
-      return exits.get(new SimpleEntry<>(word2.toLowerCase(), word3.toLowerCase()));
+  public Station getExit(String direction, String line) {
+    if (line != null) { // if line is not null, we can directly return the station
+      return exits.get(new SimpleEntry<>(direction.toLowerCase(), line.toLowerCase()));
     }
+
     Station returnStation = null;
     for (Entry<String, String> exit : exits.keySet()) {
-      if (exit.getKey().equals(word2.toLowerCase()) || exit.getValue().equals(word2.toLowerCase())) {
+      if (exit.getKey().equals(direction.toLowerCase()) || exit.getValue().equals(direction.toLowerCase())) {
         if (returnStation != null) {
+          // if there is more than one possible exit to take with the given information, return null
           return null;
         }
         returnStation = exits.get(exit);

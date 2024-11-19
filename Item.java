@@ -1,7 +1,11 @@
 import java.util.Map.Entry;
 
 /**
- * Represents an item in the game with a name, description, and weight.
+ * This class is the Item class of the "London Underground" application.
+ * "London Underground" is a simple, text-based adventure game.
+ * 
+ * Represents an item in the game with a name, description, weight, and 
+ * an effect function when used.
  * 
  * @author Mehmet Kutay Bozkurt
  * @version 1.0
@@ -9,13 +13,13 @@ import java.util.Map.Entry;
 public class Item {
   private String name;
   private String description;
-  private int weight;
-  private UseEffectFunction effect; // the effect of the item when it is used
+  private int weight; // the weight of the item in lbs
+  private UseEffect effect; // the effect of the item when it is used
 
   /**
-   * Create a new item with the given name, description, and weight.
+   * Constructor - Create a new item with the given name, description, weight, and effect.
    */
-  public Item(String name, String description, int weight, UseEffectFunction effect) {
+  public Item(String name, String description, int weight, UseEffect effect) {
     this.name = name;
     this.description = description;
     this.weight = weight;
@@ -27,13 +31,6 @@ public class Item {
    */
   public String getName() {
     return name;
-  }
-  
-  /**
-   * @return The description of the item.
-   */
-  public String getDescription() {
-    return description;
   }
   
   /**
@@ -53,7 +50,8 @@ public class Item {
 
   /**
    * Use the item, applying its effect to the given station.
-   * @return true if the game finishes, false otherwise.
+   * @return Boolean: True if the game finishes, false otherwise.
+   *         String: The message to be displayed to the user.
    */
   public Entry<Boolean, String> use(Station station) {
     return effect.use(station);

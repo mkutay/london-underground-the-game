@@ -1,8 +1,12 @@
 import java.util.Stack;
 
 /**
+ * This is the Player class of the "London Underground" application.
+ * "London Underground" is a simple text-based adventure game.
+ * 
  * The player class representing the player in the game.
  * The player has a back stack of stations visited and an inventory of items.
+ *
  * @author Mehmet Kutay Bozkurt
  * @version 1.0
  */
@@ -11,13 +15,13 @@ public class Player {
   private Inventory inventory;
   
   /**
-   * Constructor for the player class.
+   * Constructor - Create a player with a starting station and an empty inventory.
    * @param startStation The station where the player starts.
    */
   public Player(Station startStation) {
     backStack = new Stack<Station>();
     backStack.push(startStation);
-    inventory = new Inventory(10);
+    inventory = new Inventory(10); // The player can carry up to 10 pounds.
   }
 
   /**
@@ -28,35 +32,36 @@ public class Player {
   }
 
   /**
-   * @return The number of stations in the back stack.
-   */
-  public int getBackStackCount() {
-    return backStack.size();
-  }
-
-  /**
    * Remove the last station from the back stack.
+   * @return If the player is at the very beginning, return false.
    */
-  public void popBackStack() {
+  public boolean goBack() {
+    if (backStack.size() == 1) {
+      return false;
+    }
     backStack.pop();
+    return true;
   }
 
   /**
-   * Add a station to the back stack.
+   * Go to a station (that is add the station to the back stack).
+   * @param station The station to go to.
    */
-  public void pushBackStack(Station station) {
+  public void goStation(Station station) {
     backStack.push(station);
   }
 
   /**
    * Add a picked item to the inventory.
+   * @param item The item to add.
+   * @return True if the item was added successfully, false otherwise.
    */
   public boolean addItem(Item item) {
     return inventory.addItem(item);
   }
 
   /**
-   * @return an item from the inventory with the given name, null if it doesn't exist.
+   * @return An item from the inventory with the given name, null if it doesn't exist.
    */
   public Item getItem(String itemName) {
     return inventory.getItem(itemName);

@@ -19,21 +19,20 @@ public class Processor {
   private HashMap<String, CommandAction> commandRegistry;
 
   /**
-   * Constructor - Create the tube, player, and characters objects.
-   * Initialise the command registry.
+   * Constructor - Create the tube, player, and characters objects. Initialises the command registry.
    */
   public Processor() {
     tube = new Tube();
     player = new Player(tube.getStartStation());
     characters = new Characters(tube);
 
-    initialiseCommands();
+    createCommandRegistry();
   }
 
   /**
    * Initialise the command registry with the commands available in the game.
    */
-  private void initialiseCommands() {
+  private void createCommandRegistry() {
     commandRegistry = new HashMap<>();
 
     commandRegistry.put("back", new BackCommand());

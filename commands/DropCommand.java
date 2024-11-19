@@ -1,4 +1,11 @@
 public class DropCommand implements CommandAction {
+
+  /**
+   * Execute the "drop" command, allowing the player to drop an item from
+   * their inventory into the station.
+   * @param command Command object representing the user input.
+   * @return String to be outputed to System.out.
+   */
   public String execute(Command command, Processor processor) {
     if (!command.hasIndex(1) || command.hasIndex(2)) {
       return processor.incorrectFormat();

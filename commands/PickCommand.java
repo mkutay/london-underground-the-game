@@ -1,4 +1,10 @@
 public class PickCommand implements CommandAction {
+
+  /**
+   * Execute the "pick" command, allowing the player to pick up an item from the station.
+   * @param command The command to be executed.
+   * @return String to be outputed to System.out.
+   */
   public String execute(Command command, Processor processor) {
     if (!command.hasIndex(1) || command.hasIndex(2)) {
       return processor.incorrectFormat();

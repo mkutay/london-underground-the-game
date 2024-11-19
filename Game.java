@@ -36,7 +36,7 @@ public class Game {
     boolean finished = false;
     
     while (!finished) {
-      Command command = parser.getNextCommand();
+      Command command = parser.getCommand();
       finished = processCommand(command);
     }
   }

@@ -2,39 +2,55 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 /**
- * The character class represents a character in the game.
+ * This class represents a Character in the "London Underground" game.
+ * "London Underground" is a text-based adventure game.
+ *
+ * A character has a name, a dialogue, an inventory, a current station,
+ * a list of allowed stations, and an exchange. The exchange is an entry
+ * of two items, where the character gives the key item and receives
+ * the value item in return.
  * 
  * @author Mehmet Kutay Bozkurt
  * @version 1.0
  */
 public class Character {
-  private Inventory inventory;
-  private Station currentStation;
+  private Inventory inventory; // items that the character has
+  private Station currentStation; // station where the character is currently at
   private String name;
-  private String description;
-  private ArrayList<Station> allowedStations;
-  private Entry<Item, Item> exchange; // gain key, lose value
+  private String dialogue;
+  private ArrayList<Station> allowedStations; // stations where the character is allowed to go
+  private Entry<Item, Item> exchange; // character gets "key", gives "value"
   
   /**
-   * Constructor for the player class.
+   * Constructor - creates a new character with the given name,
+   * dialogue, allowed stations, and exchange.
    * @param startStation The station where the player starts.
    */
-  public Character(String name, String description, ArrayList<Station> allowedStations, Entry<Item, Item> exchange) {
-    inventory = new Inventory(10);
+  public Character(String name, String dialogue, ArrayList<Station> allowedStations, Entry<Item, Item> exchange) {
     this.name = name;
-    this.description = description;
+    this.dialogue = dialogue;
     this.allowedStations = allowedStations;
-    currentStation = allowedStations.get(0);
     this.exchange = exchange;
+    inventory = new Inventory(10);
+    currentStation = allowedStations.get(0);
+
+    if (exchange != null) {
+      inventory.addItem(exchange.getValue()); // add the value item to the inventory
+    }
   }
 
   /**
-   * @return The current station the player is at.
+   * @return The current station the character is at.
    */
   public Station getCurrentStation() {
     return currentStation;
   }
 
+  /**
+   * Exchange an item with the character.
+   * @param item The item that the player gives the character.
+   * @return The item that the character gives in exchange, null if the exchange does not happen.
+   */
   public Item exchangeItem(Item item) {
     if (item.equals(exchange.getKey())) {
       inventory.addItem(item);
@@ -45,13 +61,6 @@ public class Character {
   }
 
   /**
-   * @return The inventory of the player as its string representation.
-   */
-  public String getInventory() {
-    return name + " has the following items:" + inventory.toString();
-  }
-
-  /**
    * @return The name of the character.
    */
   public String getName() {
@@ -59,10 +68,10 @@ public class Character {
   }
 
   /**
-   * @return The description of the character.
+   * @return The dialogue of the character.
    */
-  public String getDescription() {
-    return description;
+  public String getDialogue() {
+    return dialogue;
   }
 
   /**
@@ -78,7 +87,7 @@ public class Character {
   }
 
   /**
-   * Move the character to a random exit that is allowed.
+   * Move the character to a random exit that it's allowed to go to.
    */
   public void moveRandom() {
     int randomNum = (int) (Math.random() * 10);
@@ -88,6 +97,7 @@ public class Character {
 
     Station nextStation = currentStation.getRandomExit();
     while (!allowedStations.contains(nextStation)) {
+      // keep getting a random exit until it's an allowed station
       nextStation = currentStation.getRandomExit();
     }
     currentStation = nextStation;

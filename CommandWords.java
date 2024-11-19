@@ -53,7 +53,7 @@ public class CommandWords {
   /**
    * @return All valid commands as String.
    */
-  public String getEveryCommand() {
+  public String getAll() {
     String returnString = "  ";
     for (String command : validCommands.keySet()) {
       returnString += command + ", ";

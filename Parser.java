@@ -29,7 +29,7 @@ public class Parser  {
   /**
    * @return The next command from the user.
    */
-  public Command getNextCommand() {
+  public Command getCommand() {
     String inputLine; // will hold the full input line
     ArrayList<String> words = new ArrayList<>();
 
@@ -56,19 +56,5 @@ public class Parser  {
       words.set(0, null);
       return new Command(words); 
     }
-  }
-
-  /**
-   * @return A list of valid command words as String.
-   */
-  public String getEveryCommand() {
-    return commands.getEveryCommand();
-  }
-
-  /**
-   * @return The description of a command.
-   */
-  public String getCommandDescription(String command) {
-    return commands.getCommandDescription(command);
   }
 }

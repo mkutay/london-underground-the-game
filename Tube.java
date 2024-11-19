@@ -10,6 +10,9 @@ public class Tube {
   private ArrayList<Station> stations;
   Reader reader; // helper to read from files
   
+  /**
+   * Constructory - Initialise the tube by creating the stations and linking them together.
+   */
   public Tube() {
     stations = new ArrayList<Station>();
     reader = new Reader();
@@ -19,7 +22,8 @@ public class Tube {
   }
   
   /**
-   * Create all the stations after reading from the files.
+   * Create all the stations after reading from the file.
+   * Also create the Random station that is used to transport the player to a random station.
    */
   private void createStations() {
     ArrayList<String> stationsFile = reader.readFile("stations.txt");
@@ -32,6 +36,7 @@ public class Tube {
 
   /**
    * Link the station's exits together by reading from the files.
+   * Also link the Random station to the Bank station.
    */
   private void connectStations() {
     ArrayList<String> connectionsFile = reader.readFile("connections.txt");
@@ -71,14 +76,14 @@ public class Tube {
   }
 
   /**
-   * @return the predefined starting station of the game.
+   * @return The predefined starting station of the game.
    */
   public Station getStartStation() {
     return stations.get(1); // start the game at Piccadilly Circus
   }
 
   /**
-   * @return a random station from the tube, not including the Random station.
+   * @return A random station from the tube, not including the Random station.
    */
   public Station getRandomStation() {
     int randomIndex = (int) (Math.random() * (stations.size() - 1));
@@ -86,8 +91,9 @@ public class Tube {
   }
 
   /**
+   * Get the station with the given name.
    * @param name The name of the station.
-   * @return The station with the given name.
+   * @return The station with the given name, null if not found.
    */
   public Station getStation(String name) {
     for (Station station : stations) {

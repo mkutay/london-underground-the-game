@@ -17,8 +17,8 @@ public class Station {
   private Inventory items; // stores items in this station
 
   /**
-   * Create a station described as "description" with name as "name". Initially, it has
-   * no exits.
+   * Constructor - Create a station described as "description" with name as "name". Initially, it has
+   * no exits and no items.
    * @param description The station's description.
    * @param name The station's name, like London Bridge.
    */
@@ -40,7 +40,7 @@ public class Station {
   }
 
   /**
-   * Return a description of the station with its exits.
+   * Return a description of the station with its exits and items.
    * @return A long description of this station.
    */
   public String getDescription() {
@@ -61,9 +61,7 @@ public class Station {
    * @return Details of the station's items.
    */
   private String getItemString() {
-    String returnString = "You find the following items in the station:";
-
-    return returnString + items.toString();
+    return "You find the following items in the station:" + items.toString();
   }
 
   /**
@@ -77,7 +75,8 @@ public class Station {
   /**
    * Use an item in the station.
    * @param item The item to be used.
-   * @return true if the item was used successfully, false otherwise.
+   * @return Boolean: true if the item was used successfully, false otherwise.
+   *         String: The message to be displayed to the user.
    */
   public Entry<Boolean, String> useItem(Item item) {
     return item.use(this);
@@ -85,10 +84,10 @@ public class Station {
 
   /**
    * Remove an item from the station.
-   * @param item The item to be removed.
+   * @return True if the item was removed, false if the item doesn't exist.
    */
-  public void removeItem(Item item) {
-    items.removeItem(item);
+  public boolean removeItem(Item item) {
+    return items.removeItem(item);
   }
 
   /**
@@ -102,10 +101,13 @@ public class Station {
 
   /**
    * Return the station that is reached if we go from this station in direction
-   * "direction" with line "line". If there is no station in that direction, return null.
-   * @param direction The exit's direction.
+   * "direction" with line "line".
+   * 
+   * If only one variable is not null, look if there is only one exit that can be taken with the given
+   * information, if yes, take it, if not, return null.
+   * @param direction The exit's direction. If "line" is null, this can also be interpreted as the exit's line.
    * @param line The exit's specific line.
-   * @return The station in the given direction.
+   * @return The station in the given direction, or null if it doesn't exist or cannot be determined.
    */
   public Station getExit(String word2, String word3) {
     return exits.getExit(word2, word3);
@@ -119,7 +121,7 @@ public class Station {
   }
 
   /**
-   * @return A random exit from the station.
+   * @return A station randomly chosen from the exits of this station.
    */
   public Station getRandomExit() {
     return exits.getRandomExit();

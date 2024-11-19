@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * This class reads a file and returns its content as an ArrayList of Strings.
  * The file should be in the same directory as the program.
- * The readFile method of this class was taken from https://www.w3schools.com/java/java_files_read.asp
+ * The readFile method of this class was adapted from https://www.w3schools.com/java/java_files_read.asp
  * 
  * @author W3Schools and Mehmet Kutay Bozkurt
  * @version 1.0

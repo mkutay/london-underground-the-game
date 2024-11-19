@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 
 /**
+ * This is the Inventory class of the "London Underground" application.
+ * "London Underground" is a simple text-based adventure game.
+ * 
  * The inventory class representing the player's inventory
  * or items in a station in the game, with a maximum weight.
  * 
@@ -8,11 +11,11 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Inventory {
-  private int maxWeight;
-  private ArrayList<Item> items;
+  private int maxWeight; // The maximum weight the inventory can hold.
+  private ArrayList<Item> items; // The items in the inventory, represented as an ArrayList.
 
   /**
-   * Constructor for the inventory.
+   * Constructor - Create an empty inventory with a maximum weight.
    * @param maxWeight The maximum weight the inventory can hold.
    */
   public Inventory(int maxWeight) {
@@ -34,9 +37,10 @@ public class Inventory {
 
   /**
    * Remove an item from the inventory.
+   * @return True if the item was removed, false if the item doesn't exist.
    */
-  public void removeItem(Item item) {
-    items.remove(item);
+  public boolean removeItem(Item item) {
+    return items.remove(item);
   }
 
   /**
@@ -56,7 +60,7 @@ public class Inventory {
   /**
    * @return The total weight of the items in the inventory.
    */
-  public int getTotalWeight() {
+  private int getTotalWeight() {
     int totalWeight = 0;
     for (Item item : items) {
       totalWeight += item.getWeight();
@@ -69,7 +73,7 @@ public class Inventory {
    */
   public String toString() {
     if (items.isEmpty()) {
-      return "Empty.";
+      return "\n  Empty.";
     }
 
     String returnString = "";
@@ -80,7 +84,7 @@ public class Inventory {
   }
 
   /**
-   * @return true if the inventory is empty, false otherwise.
+   * @return True if the inventory is empty, false otherwise.
    */
   public boolean isEmpty() {
     return items.isEmpty();

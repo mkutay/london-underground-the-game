@@ -26,7 +26,7 @@ public class Characters {
    * @param tube The tube object that the characters will be placed at.
    */
   private void createCharacters(Tube tube) {
-    Item oyster = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, new UseEffectFunction() {
+    Item oyster = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, new UseEffect() {
       public Entry<Boolean, String> use(Station station) {
         if (station.getName().equals("Bank")) {
           return new SimpleEntry<Boolean, String>(true, "You have left the underground. Congratulations! You have won the game.");
@@ -36,13 +36,13 @@ public class Characters {
       }
     });
 
-    Item money = new Item("Money", "Some money that you can use to buy things.", 1, new UseEffectFunction() {
+    Item money = new Item("Money", "Some money that you can use to buy things.", 1, new UseEffect() {
       public Entry<Boolean, String> use(Station station) {
         return new SimpleEntry<Boolean, String>(false, "You cannot use the money here.");
       }
     });
 
-    Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 1, new UseEffectFunction() {
+    Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 1, new UseEffect() {
       public Entry<Boolean, String> use(Station station) {
         return new SimpleEntry<Boolean, String>(true, "You have eaten the candy.");
       }
