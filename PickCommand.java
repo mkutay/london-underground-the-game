@@ -5,6 +5,7 @@ public class PickCommand implements CommandAction {
   /**
    * @param commandLength1 The first valid command length.
    * @param commandLength2 The second valid command length.
+   * @note The commandLength1 and commandLength2 can be equal if there is only one valid command length.
    */
   public PickCommand(int commandLength1, int commandLength2) {
     this.commandLength1 = commandLength1;

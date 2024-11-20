@@ -14,6 +14,7 @@ public class TalkCommand implements CommandAction {
   /**
    * @param commandLength The length of the command to be verified.
    * @return If the given commandLength is valid.
+   * @note The commandLength1 and commandLength2 can be equal if there is only one valid command length.
    */
   public boolean verifyCommandLength(int commandLength) {
     return commandLength == commandLength1 || commandLength == commandLength2;
