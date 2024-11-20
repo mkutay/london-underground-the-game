@@ -38,16 +38,16 @@ public class Processor {
   private void createCommandRegistry() {
     commandRegistry = new HashMap<>();
 
-    commandRegistry.put("back", new BackCommand());
-    commandRegistry.put("take", new TakeCommand());
-    commandRegistry.put("pick", new PickCommand());
-    commandRegistry.put("drop", new DropCommand());
-    commandRegistry.put("use", new UseCommand());
-    commandRegistry.put("give", new GiveCommand());
-    commandRegistry.put("talk", new TalkCommand());
-    commandRegistry.put("inventory", new InventoryCommand());
-    commandRegistry.put("quit", new QuitCommand());
-    commandRegistry.put("help", new HelpCommand());
+    commandRegistry.put("back", new BackCommand(1, 1));
+    commandRegistry.put("take", new TakeCommand(3, 2));
+    commandRegistry.put("pick", new PickCommand(2, 2));
+    commandRegistry.put("drop", new DropCommand(2, 2));
+    commandRegistry.put("use", new UseCommand(2, 2));
+    commandRegistry.put("give", new GiveCommand(3, 3));
+    commandRegistry.put("talk", new TalkCommand(2, 2));
+    commandRegistry.put("inventory", new InventoryCommand(1, 1));
+    commandRegistry.put("quit", new QuitCommand(1, 1));
+    commandRegistry.put("help", new HelpCommand(2, 1));
   }
 
   /**
@@ -62,6 +62,9 @@ public class Processor {
 
     String commandWord = command.getWord(0).toLowerCase();
     CommandAction cmd = commandRegistry.get(commandWord);
+    if (!cmd.verifyCommandLength(command.getWordCount())) {
+      return incorrectFormat();
+    }
     return cmd.execute(command, this);
   }
 

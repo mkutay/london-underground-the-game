@@ -1,4 +1,23 @@
 public class UseCommand implements CommandAction {
+  private int commandLength1;
+  private int commandLength2;
+  
+  /**
+   * @param commandLength1 The first valid command length.
+   * @param commandLength2 The second valid command length.
+   */
+  public UseCommand(int commandLength1, int commandLength2) {
+    this.commandLength1 = commandLength1;
+    this.commandLength2 = commandLength2;
+  }
+
+  /**
+   * @param commandLength The length of the command to be verified.
+   * @return If the given commandLength is valid.
+   */
+  public boolean verifyCommandLength(int commandLength) {
+    return commandLength == commandLength1 || commandLength == commandLength2;
+  }
 
   /**
    * Execute the "use" command, allowing the player to use an item from
@@ -6,10 +25,6 @@ public class UseCommand implements CommandAction {
    * @return The message to be outputed to the user.
    */
   public String execute(Command command, Processor processor) {
-    if (!command.hasIndex(1) || command.hasIndex(2)) {
-      return processor.incorrectFormat();
-    }
-
     String itemName = command.getWord(1);
 
     Item item = processor.getPlayer().getInventory().getItem(itemName);

@@ -1,5 +1,24 @@
 public class HelpCommand implements CommandAction {
+  private int commandLength1;
+  private int commandLength2;
   
+  /**
+   * @param commandLength1 The first valid command length.
+   * @param commandLength2 The second valid command length.
+   */
+  public HelpCommand(int commandLength1, int commandLength2) {
+    this.commandLength1 = commandLength1;
+    this.commandLength2 = commandLength2;
+  }
+
+  /**
+   * @param commandLength The length of the command to be verified.
+   * @return If the given commandLength is valid.
+   */
+  public boolean verifyCommandLength(int commandLength) {
+    return commandLength == commandLength1 || commandLength == commandLength2;
+  }
+
   /**
    * @return Some help information. If the player types "help"
    * followed by a command, it will return the description of that command.
@@ -7,9 +26,9 @@ public class HelpCommand implements CommandAction {
    */
   public String execute(Command command, Processor processor) {
     CommandWords commands = new CommandWords();
+    String commandName = command.getWord(1);
 
-    if (command.hasIndex(1)) {
-      String commandName = command.getWord(1);
+    if (commandName != null) {
       String description = commands.getCommandDescription(commandName);
 
       if (description == null) {

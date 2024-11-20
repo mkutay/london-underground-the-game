@@ -22,35 +22,21 @@ public class Command {
   }
 
   /**
-   * @return If the command has a given index, return true, false otherwise.
-   * @param index The index to be checked.
-   */
-  public boolean hasIndex(int index) {
-    if (index < words.size()) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
    * @return The word of the command at a certain index, or null if the index is out of bounds.
    * @param index The index of the word to be returned.
    */
   public String getWord(int index) {
-    if (!hasIndex(index)) {
+    if (index >= words.size()) {
       return null;
     }
     return words.get(index);
   }
 
   /**
-   * @return True if this command was not understood.
+   * @return The number of words in the command.
    */
-  public boolean isUnknown() {
-    if (!hasIndex(0) || words.get(0) == null) {
-      return true;
-    }
-    return false;
+  public int getWordCount() {
+    return words.size();
   }
 }
 

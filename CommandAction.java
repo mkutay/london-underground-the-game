@@ -8,6 +8,11 @@
  * @version 1.0
  */
 public interface CommandAction {
+  /**
+   * @param commandLength The length of the command to be verified.
+   * @return If the given commandLength is valid.
+   */
+  public boolean verifyCommandLength(int commandLength);
 
   /**
    * Execute the command.
