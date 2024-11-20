@@ -20,5 +20,5 @@ public interface CommandAction {
    * @param processor The processor that executes the command.
    * @return The message to be displayed to the user.
    */
-  String execute(Command command, Processor processor);
+  public String execute(Command command, Processor processor);
 }

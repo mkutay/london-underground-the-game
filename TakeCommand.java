@@ -45,7 +45,7 @@ public class TakeCommand implements CommandAction {
 
     String returnString = "";
 
-    // If the player is at the "Random" station, get an actual random station.
+    // If the player is at the "Random" station, get an actual random station while informing the user.
     if (nextStation.getName().equals("Random")) {
       nextStation = processor.getTube().getRandomStation();
 

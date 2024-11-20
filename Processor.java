@@ -106,7 +106,7 @@ public class Processor {
   /**
    * @return The string to be displayed when the input format is incorrect.
    */
-  public String incorrectFormat() {
+  private String incorrectFormat() {
     return "Entered input has incorrect format. Please enter again.";
   }
 

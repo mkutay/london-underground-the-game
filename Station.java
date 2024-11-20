@@ -47,33 +47,31 @@ public class Station {
    * @return A long description of this station.
    */
   public String getDescription() {
-    String itemsString = items.isEmpty() ? "" : "\n\n" + getItemString();
-    return description + itemsString + "\n\n" + getExitString();
-  }
+    String itemsString = "";
+    if (!items.isEmpty()) {
+      itemsString = "\n\nYou find the following items in the station:" + items.toString();
+    }
 
-  /**
-   * Return a string describing the stations's exits.
-   * @return Details of the station's exits.
-   */
-  public String getExitString() {
-    String returnString = "You can take the following lines:";
+    String exitsString = "\n\nYou can take the following lines:";
 
     for (Entry<String, String> exit : exits.keySet()) { // add lines one can take
-      returnString += "\n  " +
+      // key is the direction, value is the line
+      exitsString += "\n  " +
 				capitalizeFirstLetter(exit.getKey()) + " " +
 				capitalizeFirstLetter(exit.getValue()) + " line,";
     }
 
     // remove the last comma and add a period
-    return returnString.substring(0, returnString.length() - 1) + ".";
+    exitsString = exitsString.substring(0, exitsString.length() - 1) + ".";
+
+    return description + itemsString + exitsString;
   }
 
   /**
-   * Return a string describing the items found in the station.
-   * @return Details of the station's items.
+   * @return The name of the station.
    */
-  private String getItemString() {
-    return "You find the following items in the station:" + items.toString();
+  public String getName() {
+    return name;
   }
 
   /**
@@ -115,13 +113,6 @@ public class Station {
       }
     }
     return returnStation;
-  }
-
-  /**
-   * @return The name of the station.
-   */
-  public String getName() {
-    return name;
   }
 
   /**
