@@ -1,15 +1,6 @@
 public class InventoryCommand implements CommandAction {
-  private int commandLength1;
-  private int commandLength2;
-  
-  /**
-   * @param commandLength1 The first valid command length.
-   * @param commandLength2 The second valid command length.
-   */
-  public InventoryCommand(int commandLength1, int commandLength2) {
-    this.commandLength1 = commandLength1;
-    this.commandLength2 = commandLength2;
-  }
+  private static final int commandLength1 = 1;
+  private static final int commandLength2 = 1;
 
   /**
    * @param commandLength The length of the command to be verified.

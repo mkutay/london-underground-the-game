@@ -1,16 +1,6 @@
 public class PickCommand implements CommandAction {
-  private int commandLength1;
-  private int commandLength2;
-  
-  /**
-   * @param commandLength1 The first valid command length.
-   * @param commandLength2 The second valid command length.
-   * @note The commandLength1 and commandLength2 can be equal if there is only one valid command length.
-   */
-  public PickCommand(int commandLength1, int commandLength2) {
-    this.commandLength1 = commandLength1;
-    this.commandLength2 = commandLength2;
-  }
+  private static final int commandLength1 = 2;
+  private static final int commandLength2 = 2;
 
   /**
    * @param commandLength The length of the command to be verified.
