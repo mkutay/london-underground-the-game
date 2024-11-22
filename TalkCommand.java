@@ -28,7 +28,7 @@ public class TalkCommand implements CommandAction {
   public String execute(Command command, Processor processor) {
     String characterName = command.getWord(1);
 
-    Character character = processor.getCharacter(characterName.toLowerCase());
+    Character character = processor.getTube().getCharacter(characterName.toLowerCase());
     if (character == null) {
       return "There is no character with the name " + characterName + ".";
     }

@@ -1,7 +1,4 @@
-import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 /**
  * This class is the processor class of the "London Underground" application.
@@ -17,7 +14,6 @@ import java.util.Map.Entry;
 public class Processor {
   private Tube tube;
   private Player player;
-  private ArrayList<Character> characters;
   private HashMap<String, CommandAction> commandRegistry;
 
   /**
@@ -25,10 +21,8 @@ public class Processor {
    */
   public Processor() {
     tube = new Tube();
-    player = new Player(tube.getStation("Piccadilly Circus"));
-    characters = new ArrayList<>();
+    player = new Player(tube.getStation("Piccadilly Circus")); // set the players location as Piccadilly Circus
 
-    createCharacters();
     createCommandRegistry();
   }
 
@@ -87,15 +81,9 @@ public class Processor {
    */
   public String getDescription() {
     Station currentStation = player.getCurrentStation();
-
     String returnString = currentStation.getDescription();
 
-    String characterString = "";
-    for (Character character : characters) {
-      if (character.getCurrentStation().equals(player.getCurrentStation())) {
-        characterString += "\n  " + character.getName();
-      }
-    }
+    String characterString = tube.getCharactersDescription(currentStation);
     if (!characterString.equals("")) {
       returnString += "\n\nYou also find the following characters in the station:" + characterString;
     }
@@ -111,64 +99,10 @@ public class Processor {
   }
 
   /**
-   * @return the character with the given name, null if it doesn't exist.
+   * Capitalize the first letter of a given string.
+   * Used to make the output more readable.
    */
-  public Character getCharacter(String name) {
-    for (Character character : characters) {
-      if (character.getName().toLowerCase().equals(name)) {
-        return character;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Move all characters to a random station that they are allowed to go to.
-   */
-  public void moveCharacters() {
-    for (Character character : characters) {
-      character.moveRandom();
-    }
-  }
-
-  /**
-   * Create the characters in the game and place them at the stations.
-   * Additionally, create the items that the characters will have.
-   */
-  private void createCharacters() {
-    Item oyster = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, "You have left the underground. Congratulations! You have won the game.");
-
-    Item money = new Item("Money", "Some money that you can use to buy things.", 1, "You cannot use the money here.");
-
-    Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 1, "You ate the candy.");
-
-    ArrayList<Station> bankStationList = new ArrayList<>();
-    bankStationList.add(tube.getStation("Bank"));
-    Character staff = new Character("Staff", "Did you know that you can take the Waterloo & City line at Bank station to teleport to a random station on the underground?", bankStationList, null);
-    characters.add(staff);
-
-    ArrayList<Station> piccadillyStationList = new ArrayList<>();
-    piccadillyStationList.add(tube.getStation("Holborn"));
-    piccadillyStationList.add(tube.getStation("Piccadilly Circus"));
-    piccadillyStationList.add(tube.getStation("Leicester Square"));
-    piccadillyStationList.add(tube.getStation("Covent Garden"));
-    Entry<Item, Item> exchangeHomeless = new SimpleEntry<Item, Item>(null, money);
-    Character homeless = new Character("Homeless", "I see that you are lost on the underground. Take this money. It may help you leave the station.", piccadillyStationList, exchangeHomeless);
-    characters.add(homeless);
-
-    ArrayList<Station> candyManStation = new ArrayList<>();
-    candyManStation.add(tube.getStation("Oxford Circus"));
-    Entry<Item, Item> exchangeCandyMan = new SimpleEntry<Item, Item>(money, candy);
-    Character candyMan = new Character("CandyMan", "Hey I am CandyMan! Would you like to buy some very reasonably priced candy?", candyManStation, exchangeCandyMan);
-    characters.add(candyMan);
-
-    ArrayList<Station> districtStationList = new ArrayList<>();
-    districtStationList.add(tube.getStation("Embankment"));
-    districtStationList.add(tube.getStation("Temple"));
-    districtStationList.add(tube.getStation("Blackfriars"));
-    districtStationList.add(tube.getStation("Bank"));
-    Entry<Item, Item> exchangeChild = new SimpleEntry<Item, Item>(candy, oyster);
-    Character child = new Character("Child", "Hey, I want some candy! Do you have some candy?", districtStationList, exchangeChild);
-    characters.add(child);
-  }
+	public static String capitalizeFirstLetter(String str) {
+		return str.substring(0, 1).toUpperCase() + str.substring(1);
+	}
 }

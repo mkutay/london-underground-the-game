@@ -53,7 +53,7 @@ public class TakeCommand implements CommandAction {
     }
 
     processor.getPlayer().goStation(nextStation);
-    processor.moveCharacters(); // Move characters in random directions after the player moves.
+    processor.getTube().moveCharacters(); // Move characters in random directions after the player moves.
     returnString += processor.getDescription(); // Get the description of the new station.
 
     return returnString;

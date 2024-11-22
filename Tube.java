@@ -1,4 +1,6 @@
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 /**
  * This class represents the tube map. It creates all the stations and links them together.
@@ -9,6 +11,7 @@ import java.util.ArrayList;
  */
 public class Tube {
   private ArrayList<Station> stations;
+  private ArrayList<Character> characters; // stores characters
   private Reader reader; // helper to read from files
   
   /**
@@ -17,9 +20,11 @@ public class Tube {
   public Tube() {
     stations = new ArrayList<Station>();
     reader = new Reader();
+    characters = new ArrayList<>();
 
     createStations();
     connectStations();
+    createCharacters();
   }
   
   /**
@@ -32,7 +37,7 @@ public class Tube {
       Station station = new Station(stationsFile.get(i), stationsFile.get(i + 1));
       stations.add(station);
     }
-    stations.add(new Station("You are now being transported to a random station on the tube.", "Random"));
+    stations.add(new Station("You are now being transported to a random station on the ", "Random"));
   }
 
   /**
@@ -96,5 +101,80 @@ public class Tube {
       }
     }
     return null;
+  }
+
+  /**
+   * @return the character with the given name, null if it doesn't exist.
+   */
+  public Character getCharacter(String name) {
+    for (Character character : characters) {
+      if (character.getName().toLowerCase().equals(name)) {
+        return character;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Move all characters to a random station that they are allowed to go to.
+   */
+  public void moveCharacters() {
+    for (Character character : characters) {
+      character.moveRandom();
+    }
+  }
+
+  /**
+   * @return The description of the characters in the station.
+   */
+  public String getCharactersDescription(Station playerCurrentStation) {
+    String characterString = "";
+    for (Character character : characters) {
+      if (character.getCurrentStation().equals(playerCurrentStation)) {
+        characterString += "\n  " + character.getName();
+      }
+    }
+    return characterString;
+  }
+
+  /**
+   * Create the characters in the game and place them at one of the stations.
+   * Additionally, create the items that the characters will have.
+   */
+  private void createCharacters() {
+    Item oyster = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, "You have left the underground. Congratulations! You have won the game.");
+
+    Item money = new Item("Money", "Some money that you can use to buy things.", 1, "You cannot use the money here.");
+
+    Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 1, "You ate the candy.");
+
+    ArrayList<Station> bankStationList = new ArrayList<>();
+    bankStationList.add(getStation("Bank"));
+    Character staff = new Character("Staff", "Did you know that you can take the Waterloo & City line at Bank station to teleport to a random station on the underground?", bankStationList, null);
+    characters.add(staff);
+
+    ArrayList<Station> piccadillyStationList = new ArrayList<>();
+    piccadillyStationList.add(getStation("Holborn"));
+    piccadillyStationList.add(getStation("Piccadilly Circus"));
+    piccadillyStationList.add(getStation("Leicester Square"));
+    piccadillyStationList.add(getStation("Covent Garden"));
+    Entry<Item, Item> exchangeHomeless = new SimpleEntry<Item, Item>(null, money);
+    Character homeless = new Character("Homeless", "I see that you are lost on the underground. Take this money. It may help you leave the station.", piccadillyStationList, exchangeHomeless);
+    characters.add(homeless);
+
+    ArrayList<Station> candyManStation = new ArrayList<>();
+    candyManStation.add(getStation("Oxford Circus"));
+    Entry<Item, Item> exchangeCandyMan = new SimpleEntry<Item, Item>(money, candy);
+    Character candyMan = new Character("CandyMan", "Hey I am CandyMan! Would you like to buy some very reasonably priced candy?", candyManStation, exchangeCandyMan);
+    characters.add(candyMan);
+
+    ArrayList<Station> districtStationList = new ArrayList<>();
+    districtStationList.add(getStation("Embankment"));
+    districtStationList.add(getStation("Temple"));
+    districtStationList.add(getStation("Blackfriars"));
+    districtStationList.add(getStation("Bank"));
+    Entry<Item, Item> exchangeChild = new SimpleEntry<Item, Item>(candy, oyster);
+    Character child = new Character("Child", "Hey, I want some candy! Do you have some candy?", districtStationList, exchangeChild);
+    characters.add(child);
   }
 }
