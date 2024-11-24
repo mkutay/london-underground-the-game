@@ -70,6 +70,11 @@ public class Processor {
     return returnString;
   }
 
+  /**
+   * Execute the "back" command, allowing the player to go back to the previous station until the very beginning.
+   * @param command The command to be executed.
+   * @return The output of the command that will be displayed to the user.
+   */
   private String backCommand(Command command) {
     if (!player.goBack()) { // If the player is at the very beginning and cannot go back any further.
       return "You cannot go back any further. You are currently at the very beginning.";
@@ -77,6 +82,11 @@ public class Processor {
     return getDescription(); // Return the description of the old station the player is now at.
   }
 
+  /**
+   * Execute the "drop" command, allowing the player to drop an item from their inventory onto the current station.
+   * @param command The command to be executed.
+   * @return String to be displayed to the user.
+   */
   private String dropCommand(Command command) {
     String itemName = command.getWord(1);
     Item item = player.getInventory().getItem(itemName);
@@ -90,6 +100,11 @@ public class Processor {
     return "You have dropped " + itemName + " in your location.";
   }
 
+  /**
+   * Execute the "give" command, allowing the player to give an item from their inventory to a character.
+   * @param command The command to be executed.
+   * @return String to be outputed to the console.
+   */
   private String giveCommand(Command command) {
     String characterName = command.getWord(1);
     String itemName = command.getWord(2);
@@ -115,6 +130,10 @@ public class Processor {
     return "You have given " + item.getName() + " and received " + exchangedItem.getName() + " in exchange.";
   }
 
+  /**
+   * @param command The help command to be processed.
+   * @return Some help information. If the player types an additional command (ie "help take"), it will return the description of that command.
+   */
   private String helpCommand(Command command) {
     String commandName = command.getWord(1);
 
@@ -133,6 +152,11 @@ public class Processor {
       + "\n\nFor more information about a command, type \"help [command]\".";
   }
 
+  /**
+   * Execute the "pick" command, allowing the player to pick up an item from the current station.
+   * @param command The pick command to be processed.
+   * @return The output of the command.
+   */
   private String pickCommand(Command command) {
     String itemName = command.getWord(1);
 
@@ -150,6 +174,12 @@ public class Processor {
     return "You cannot pick up " + item.getName() + " because it is too heavy.";
   }
 
+  /**
+   * Execute the "take" command, allowing the player to take a specific exit from the current station.
+   * @note If the player goes to the invisible "Random" station, the player will be automatically moved again to a random station.
+   * @param command The take command to be processed.
+   * @return The output of the command.
+   */
   private String takeCommand(Command command) {
     String directionName = command.getWord(1);
     String lineName = command.getWord(2);
@@ -184,6 +214,12 @@ public class Processor {
     return returnString;
   }
 
+  /**
+   * Execute the "talk" command, allowing the player to talk to a character.
+   * @note If the character gives an item to the player, it will be added to the player's inventory.
+   * @param command The talk command to be processed.
+   * @return The output of the command.
+   */
   private String talkCommand(Command command) {
     String characterName = command.getWord(1);
 
@@ -204,6 +240,11 @@ public class Processor {
     return returnString;
   }
 
+  /**
+   * Execute the "use" command, allowing the player to use an item from their inventory.
+   * @param command The use command to be processed.
+   * @return The output of the command to be displayed on the console.
+   */
   private String useCommand(Command command) {
     String itemName = command.getWord(1);
 
