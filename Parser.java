@@ -50,11 +50,11 @@ public class Parser  {
 
     // Now check whether the first word interpreted as a command is known.
     // If so, create a command with it. If not, create a "null" command (for unknown command).
-    if (commands.isValidCommand(words.get(0).toLowerCase())) {
+    if (commands.isValidCommand(words.get(0).toLowerCase(), words.size())) {
       return new Command(words);
     } else {
       words.set(0, null);
-      return new Command(words); 
+      return new Command(words);
     }
   }
 }

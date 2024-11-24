@@ -18,10 +18,10 @@ public class Player {
    * Constructor - Create a player with a starting station and an empty inventory.
    * @param startStation The station where the player starts.
    */
-  public Player(Station startStation) {
+  public Player(Station startStation, int maxWeight) {
     backStack = new Stack<Station>();
     backStack.push(startStation);
-    inventory = new Inventory(10); // The player can carry up to 10 lbs.
+    inventory = new Inventory(maxWeight); // The player can carry up to 10 lbs.
   }
 
   /**
@@ -56,5 +56,22 @@ public class Player {
    */
   public Inventory getInventory() {
     return inventory;
+  }
+
+  /**
+   * Add an item to the player's inventory.
+   * @param item The item to add.
+   */
+  public void addItem(Item item) {
+    inventory.addItem(item);
+  }
+
+  /**
+   * Remove an item from the player's inventory.
+   * @param item The item to remove.
+   * @return True if the item was removed, false if the item doesn't exist.
+   */
+  public boolean removeItem(Item item) {
+    return inventory.removeItem(item);
   }
 }

@@ -45,19 +45,11 @@ public class Item {
   public String toString() {
     return name + " (" + weight + " lbs): " + description;
   }
-
+  
   /**
-   * @return True if the item has an effect when used, false otherwise.
+   * @return The effect (dialogue) of the item when it is used.
    */
-  public boolean isUseable() {
-    return effectDialogue != null;
-  }
-
-  /**
-   * Use the item.
-   * @return The message to be displayed to the user.
-   */
-  public String useItem() {
+  public String getEffectDialogue() {
     return effectDialogue;
   }
 }

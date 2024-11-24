@@ -55,12 +55,20 @@ public class Character {
    * @return The item that the character gives in exchange, null if the exchange does not happen.
    */
   public Item exchangeItem(Item item) {
-    if (item == null || exchange.getKey().equals(item)) {
-      if (item != null) inventory.addItem(item);
+    if (item == null) {
+      if (exchange.getKey() == null) {
+        inventory.removeItem(exchange.getValue());
+        return exchange.getValue();
+      }
+      return null;
+    } else {
+      if (!item.equals(exchange.getKey())) {
+        return null;
+      }
+      inventory.addItem(item);
       inventory.removeItem(exchange.getValue());
       return exchange.getValue();
     }
-    return null;
   }
 
   /**

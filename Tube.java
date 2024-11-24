@@ -144,9 +144,9 @@ public class Tube {
   private void createCharacters() {
     Item oyster = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, "You have left the underground. Congratulations! You have won the game.");
 
-    Item money = new Item("Money", "Some money that you can use to buy things.", 1, "You cannot use the money here.");
+    Item money = new Item("Money", "Some money that you can use to buy things.", 1, null);
 
-    Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 1, "You ate the candy.");
+    Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 1, null);
 
     ArrayList<Station> bankStationList = new ArrayList<>();
     bankStationList.add(getStation("Bank"));
