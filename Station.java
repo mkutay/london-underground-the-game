@@ -57,8 +57,8 @@ public class Station {
     for (Entry<String, String> exit : exits.keySet()) { // add lines one can take
       // key is the direction, value is the line
       exitsString += "\n  " +
-				Processor.capitalizeFirstLetter(exit.getKey()) + " " +
-				Processor.capitalizeFirstLetter(exit.getValue()) + " line,";
+				capitalizeFirstLetter(exit.getKey()) + " " +
+				capitalizeFirstLetter(exit.getValue()) + " line,";
     }
 
     // remove the last comma and add a period
@@ -124,4 +124,12 @@ public class Station {
     Object[] values = exits.values().toArray();
     return (Station) values[generator.nextInt(values.length)];
   }
+
+  /**
+   * Capitalize the first letter of a given string.
+   * Used to make the output more readable.
+   */
+	private String capitalizeFirstLetter(String str) {
+		return str.substring(0, 1).toUpperCase() + str.substring(1);
+	}
 }

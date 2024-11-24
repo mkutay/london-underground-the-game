@@ -58,20 +58,6 @@ public class Processor {
   }
 
   /**
-   * @return The player.
-   */
-  public Player getPlayer() {
-    return player;
-  }
-
-  /**
-   * @return The tube.
-   */
-  public Tube getTube() {
-    return tube;
-  }
-
-  /**
    * @return The description of the current station, including the items, exits, and characters.
    */
   public String getDescription() {
@@ -83,14 +69,6 @@ public class Processor {
 
     return returnString;
   }
-
-  /**
-   * Capitalize the first letter of a given string.
-   * Used to make the output more readable.
-   */
-	public static String capitalizeFirstLetter(String str) {
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
 
   private String backCommand(Command command) {
     if (!player.goBack()) { // If the player is at the very beginning and cannot go back any further.

@@ -57,21 +57,4 @@ public class Player {
   public Inventory getInventory() {
     return inventory;
   }
-
-  /**
-   * Add an item to the player's inventory.
-   * @param item The item to add.
-   */
-  public void addItem(Item item) {
-    inventory.addItem(item);
-  }
-
-  /**
-   * Remove an item from the player's inventory.
-   * @param item The item to remove.
-   * @return True if the item was removed, false if the item doesn't exist.
-   */
-  public boolean removeItem(Item item) {
-    return inventory.removeItem(item);
-  }
 }
