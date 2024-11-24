@@ -15,14 +15,14 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class Parser  {
-  private CommandWords commands; // holds all valid command words
+  private CommandWords validCommands; // holds all valid command words
   private Scanner reader; // source of command input
 
   /**
    * Contructor - Create a parser to read from the terminal window.
    */
   public Parser() {
-    commands = new CommandWords();
+    validCommands = new CommandWords();
     reader = new Scanner(System.in);
   }
 
@@ -37,7 +37,7 @@ public class Parser  {
 
     inputLine = reader.nextLine();
 
-    // find each word from the line and add them to the list
+    // Find each word from the line and add them to the list.
     try (Scanner tokenizer = new Scanner(inputLine)) {
       while (tokenizer.hasNext()) {
         words.add(tokenizer.next()); // get the next word
@@ -48,9 +48,9 @@ public class Parser  {
       return new Command(words);
     }
 
-    // Now check whether the first word interpreted as a command is known.
+    // Now check whether the first word interpreted as a command is known (including the length of it).
     // If so, create a command with it. If not, create a "null" command (for unknown command).
-    if (commands.isValidCommand(words.get(0).toLowerCase(), words.size())) {
+    if (validCommands.isValidCommand(words.get(0).toLowerCase(), words.size())) {
       return new Command(words);
     } else {
       words.set(0, null);

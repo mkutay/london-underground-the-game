@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Reader {
   /**
-   * @return an ArrayList of Strings with the content of the file on each line.
+   * @return An ArrayList of Strings with the content of the file on each line.
    */
   public ArrayList<String> readFile(String fileName) {
     ArrayList<String> returnList = new ArrayList<>();
@@ -25,6 +25,7 @@ public class Reader {
       }
       scanner.close();
     } catch (FileNotFoundException e) {
+      // This exception should not happen in this program, but it is still handled.
       System.out.println("Couldn't read the " + fileName + " file.");
       e.printStackTrace();
     }

@@ -117,7 +117,7 @@ public class Station {
 
   /**
    * The following code was taken from https://stackoverflow.com/questions/929554/is-there-a-way-to-get-the-value-of-a-hashmap-randomly-in-java
-   * @return A random exit from the exits of a station.
+   * @return A random exit from the exits of this station.
    */
   public Station getRandomExit() {
     Random generator = new Random();
