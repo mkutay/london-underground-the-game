@@ -1,10 +1,11 @@
 /**
- * This class is the processor class of the "London Underground" application.
- * "London Underground" is a simple, text based adventure game.
+ * This class is the Processor class of the "London Underground" application.
+ * "London Underground" is a simple, text based adventure game that was
+ * inspired by the stations found in Central London.
  * 
  * This class processes the commands entered by the user and returns
- * the appropriate output. It also holds the Tube, Player, and Characters
- * objects.
+ * the appropriate output. It also holds the state of the game by having
+ * the Tube and Player objects.
  * 
  * @author Mehmet Kutay Bozkurt
  * @version 1.0
@@ -15,46 +16,62 @@ public class Processor {
   private CommandWords validCommands;
 
   /**
-   * Constructor - Create the tube, player, and characters objects. Initialises the command registry.
+   * Constructor - Create the tube and player objects.
+   * Set the player's starting location as the Piccadilly Circus station
+   * and the max weight of the player's inventory as 10 lbs.
    */
   public Processor() {
     validCommands = new CommandWords();
     tube = new Tube();
-    player = new Player(tube.getStation("Piccadilly Circus"), 10); // set the players location as Piccadilly Circus and the max weight of the inventory as 10 lbs
+    // Set the player's initial location and the max weight of their inventory.
+    player = new Player(tube.getStation("Piccadilly Circus"), 10);
   }
 
   /**
-   * Process the command given by the user.
+   * Process the command given by the user and output accordingly.
    * @param command The command to be processed.
-   * @return The output of the command.
+   * @return True if the game ends, false otherwise.
    */
-  public String processCommand(Command command) {
-    if (command.getWord(0) == null) { // if the user enters nothing or given command is not in ValidCommands
-      return "I don't know what you mean. You might have entered it as an incorrect format. Please enter again or try typing \"help\" for more information.";
+  public boolean processCommand(Command command) {
+    System.out.println();
+
+    if (command.getWord(0) == null) {
+      // If the user enters nothing or given command is not in ValidCommands
+      System.out.println("I don't know what you mean. You might have entered it as an incorrect format. Please enter again or try typing \"help\" for more information.");
     }
 
     String commandWord = command.getWord(0).toLowerCase();
+    String output;
     if (commandWord.equals("help")) {
-      return helpCommand(command);
+      output = helpCommand(command);
     } else if (commandWord.equals("take")) {
-      return takeCommand(command);
+      output = takeCommand(command);
     } else if (commandWord.equals("drop")) {
-      return dropCommand(command);
+      output = dropCommand(command);
     } else if (commandWord.equals("inventory")) {
-      return "Inventory:" + player.getInventory().toString();
+      output = "Inventory:" + player.getInventory().toString();
     } else if (commandWord.equals("back")) {
-      return backCommand(command);
+      output = backCommand(command);
     } else if (commandWord.equals("talk")) {
-      return talkCommand(command);
+      output = talkCommand(command);
     } else if (commandWord.equals("give")) {
-      return giveCommand(command);
+      output = giveCommand(command);
     } else if (commandWord.equals("pick")) {
-      return pickCommand(command);
+      output = pickCommand(command);
     } else if (commandWord.equals("use")) {
-      return useCommand(command);
+      output = useCommand(command);
     } else {
-      return null; // the "quit" command is handled here
+      output = "Thank you for playing. Goodbye!"; // the "quit" command is handled here
     }
+
+    System.out.println(output);
+    
+    if (output.contains("Goodbye!") || output.contains("Congratulations!")) {
+      // If the game ends (that is, when the output either contains Goodbye! or Congratulations!)
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -64,6 +81,7 @@ public class Processor {
     String returnString = player.getCurrentStation().getDescription();
     String characterString = tube.getCharactersDescription(player.getCurrentStation());
     if (!characterString.equals("")) {
+      // If there are characters in the station, add them to the returnString.
       returnString += "\n\nYou also find the following characters in the station:" + characterString;
     }
 
@@ -189,7 +207,7 @@ public class Processor {
     if (lineName == null) {
       nextStation = player.getCurrentStation().getExit(directionName);
       if (nextStation == null) {
-        return "There is more than one possible exit. Please be more specific.";
+        return "Either there is more than one possible exit or you have entered incorrectly. Please be more specific.";
       }
     } else {
       nextStation = player.getCurrentStation().getExit(directionName, lineName);

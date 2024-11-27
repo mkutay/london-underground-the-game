@@ -1,9 +1,10 @@
 /**
  * This class is the Item class of the "London Underground" application.
- * "London Underground" is a simple, text-based adventure game.
+ * "London Underground" is a simple, text-based adventure game that was
+ * inspired by the stations found in Central London.
  * 
- * Represents an item in the game with a name, description, weight, and 
- * an effect function when used.
+ * This Item class represents an item in the game. The item can have a name,
+ * description, weight, and an effect dialogue when used it is used by the player.
  * 
  * @author Mehmet Kutay Bozkurt
  * @version 1.0
@@ -15,7 +16,11 @@ public class Item {
   private String effectDialogue; // the effect of the item when it is used
 
   /**
-   * Constructor - Create a new item with the given name, description, weight, and effect.
+   * Constructor - Create a new item with the given name, description, weight, and effect dialogue.
+   * @param name The name of the item.
+   * @param description The description of the item.
+   * @param weight The weight of the item.
+   * @param effectDialogue The effect of the item when it is used, can be null if the item cannot be used.
    */
   public Item(String name, String description, int weight, String effectDialogue) {
     this.name = name;
@@ -47,7 +52,7 @@ public class Item {
   }
   
   /**
-   * @return The effect (dialogue) of the item when it is used.
+   * @return The effect dialogue of the item when it is used, null if the item cannot be used.
    */
   public String getEffectDialogue() {
     return effectDialogue;

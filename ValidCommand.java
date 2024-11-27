@@ -1,17 +1,19 @@
 import java.util.ArrayList;
 
 /**
- * This class is the valid command class of the "London Underground" application.
- * "London Underground" is a simple, text based adventure game.
+ * This class is the valid command class of the "London Underground"
+ * application. "London Underground" is a simple, text based adventure game
+ * that was inspired by the stations found in Central London.
  * 
  * This class holds the description and valid lengths of a valid command.
+ * A valid command can have one or two valid lengths.
  * 
  * @author Mehmet Kutay Bozkurt
  * @version 1.0
  */
 public class ValidCommand {
-  private String description; // The description of the command.
-  private ArrayList<Integer> commandLengths; // The valid lengths of the command.
+  private String description; // the description of the command
+  private ArrayList<Integer> commandLengths; // the valid lengths of the command
 
   /**
    * Constructor - Create a new valid command with a description and two valid command lengths.

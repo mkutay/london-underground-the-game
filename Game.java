@@ -1,20 +1,21 @@
 /**
  * This class is the main class of the "London Underground" application. 
- * "London Underground" is a simple, text based adventure game. Players
- * can walk around some of the underground stations in central London,
- * pick up and drop items, and try to find a way out of the stations by
+ * "London Underground" is a simple, text based adventure game that was
+ * inspired by the stations found in Central London. Players can walk
+ * around some of the underground stations in the city, pick up
+ * and drop items, and try to find a way out of the stations by
  * talking with characters and using items.
  * 
  * This main class creates and initialises the parser and the processor,
- * which are used to read and process the user commands. It also initiates
- * the game loop.
+ * which are used to read and process the user commands, respectively.
+ * It also initiates the game loop.
  * 
  * @author  Michael Kölling, David J. Barnes, and Mehmet Kutay Bozkurt
  * @version 1.0
  */
 public class Game { 
-  private Parser parser;
-  private Processor processor;
+  private Parser parser; // reads and parses the user's input commands.
+  private Processor processor; // processes the commands and updates the game state.
 
   /**
    * Constructor - Creeate the parser and processor objects.
@@ -30,11 +31,9 @@ public class Game {
   public void play() {
     printWelcome();
 
-    // Enter the main command loop. Here we repeatedly read commands and
-    // execute them until the game is over.
-
     boolean finished = false;
     
+    // Enter the main command loop. Here we repeatedly read commands and execute them until the game is over.
     while (!finished) {
       Command command = parser.getCommand();
       finished = processCommand(command);
@@ -51,25 +50,16 @@ public class Game {
     System.out.println("You should find it before you leave the underground.");
     System.out.println("Type \"help\" if you need help.");
     System.out.println();
-    System.out.println(processor.getDescription());
+    System.out.println(processor.getDescription()); // print the initial description of the starting location.
   }
 
   /**
-   * Process the command given by the user.
+   * Process the command given by the user and read by the parser.
    * @param command The command to be processed.
    * @return True if the command ends the game, false otherwise.
    */
   private boolean processCommand(Command command) {
-    String output = processor.processCommand(command);
-
-    System.out.println();
-
-    if (output == null) {
-      System.out.println("Thank you for playing. Goodbye!");
-      return true;
-    }
-
-    System.out.println(output);
-    return false;
+    boolean isEnded = processor.processCommand(command);
+    return isEnded;
   }
 }

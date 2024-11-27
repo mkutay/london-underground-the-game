@@ -1,9 +1,13 @@
 import java.util.HashMap;
 
 /**
- * This class holds an enumeration of all command words known to the game
- * "London Underground". It is used to recognise commands as they are
- * typed in. It also holds a description of each command in a HashMap.
+ * This class is the CommandWords class of the "London Underground"
+ * application. "London Underground" is a simple, text based adventure
+ * game that was inspired by the stations found in Central London.
+ * 
+ * This class holds an enumeration of all command words known in the game.
+ * It is used to recognise commands as they are typed in. The valid commands
+ * are stored in a HashMap, which are initialised in the constructor.
  *
  * @author Michael Kölling, David J. Barnes, and Mehmet Kutay Bozkurt
  * @version 1.0
@@ -12,7 +16,8 @@ public class CommandWords {
   private HashMap<String, ValidCommand> validCommands; // key is the command name, value holds the description and the number of words the command should have
 
   /**
-   * Constructor - initialise the command words with their descriptions.
+   * Constructor - initialise the command words with their descriptions and
+   * the number of words they should have.
    */
   public CommandWords() {
     validCommands = new HashMap<>();

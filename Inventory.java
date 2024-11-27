@@ -2,10 +2,12 @@ import java.util.ArrayList;
 
 /**
  * This is the Inventory class of the "London Underground" application.
- * "London Underground" is a simple text-based adventure game.
+ * "London Underground" is a simple text-based adventure game that was
+ * inspired by the stations found in Central London.
  * 
- * The inventory class representing the player's inventory
- * or items in a station in the game, with a maximum weight.
+ * This Inventory class can represent the inventory of the player,
+ * the characters in the game, or the items in a station. An inventory
+ * can have a maximum weight, and items can be added or removed from it.
  * 
  * @author Mehmet Kutay Bozkurt
  * @version 1.0
@@ -25,7 +27,7 @@ public class Inventory {
 
   /**
    * Add an item to the inventory.
-   * @return true if the item was added, false if the inventory is full.
+   * @return True if the item was added, false if the inventory is full.
    */
   public boolean addItem(Item item) {
     if (item.getWeight() + getTotalWeight() > maxWeight) {
@@ -44,11 +46,12 @@ public class Inventory {
   }
 
   /**
+   * Get an item from the inventory by its name as String.
    * @param itemName The name of the item.
    * @return The item with the given name, null if it doesn't exist
    */
   public Item getItem(String itemName) {
-    itemName = itemName.toLowerCase();
+    itemName = itemName.toLowerCase(); // make the item name case-insensitive
     for (Item item : items) {
       if (item.getName().toLowerCase().equals(itemName)) {
         return item;
@@ -69,7 +72,8 @@ public class Inventory {
   }
 
   /**
-   * @return A string representation of the items in the inventory.
+   * @return A string representation of the items in the inventory
+   * that is to be displayed to the user.
    */
   public String toString() {
     if (items.isEmpty()) {

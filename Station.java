@@ -5,10 +5,13 @@ import java.util.Random;
 
 /**
  * This class is the Station class of the "London Underground" application. 
- * "London Underground" is a simple, text based adventure game.
+ * "London Underground" is a simple, text based adventure game that was
+ * inspired by the stations found in Central London.
  * 
  * A "Station" represents one location in the scenery of the game. It is 
- * connected to other stations via lines (that is exits).
+ * connected to other stations via lines (in other words, exits). Each 
+ * station can hold items using the Inventory class, and the player can
+ * pick items up from the stations or drop them in the stations.
  * 
  * @author Michael Kölling, David J. Barnes, and Mehmet Kutay Bozkurt
  * @version 1.0
@@ -17,11 +20,10 @@ public class Station {
   private String description;
   private String name;
   private Inventory items; // stores items in this station
-  private HashMap<Entry<String, String>, Station> exits; // stores exits of a station
+  private HashMap<Entry<String, String>, Station> exits; // stores exits of this station
 
   /**
-   * Constructor - Create a station described as "description" with name as "name". Initially, it has
-   * no exits and no items.
+   * Constructor - Create a station with a given description and name, and initialise its exits and items.
    * @param description The station's description.
    * @param name The station's name, like London Bridge.
    */
@@ -43,27 +45,30 @@ public class Station {
   }
 
   /**
-   * Return a description of the station with its exits and items.
-   * @return A long description of this station.
+   * @return A long description of this station with the exits and the items
+   * of the station.
    */
   public String getDescription() {
     String itemsString = "";
     if (!items.isEmpty()) {
+      // If there are items in the station, add them to the description.
       itemsString = "\n\nYou find the following items in the station:" + items.toString();
     }
 
     String exitsString = "\n\nYou can take the following lines:";
 
-    for (Entry<String, String> exit : exits.keySet()) { // add lines one can take
-      // key is the direction, value is the line
+    // go through every exit of the station
+    for (Entry<String, String> exit : exits.keySet()) {
+      // "key" is the direction, "value" is the line:
       exitsString += "\n  " +
 				capitalizeFirstLetter(exit.getKey()) + " " +
 				capitalizeFirstLetter(exit.getValue()) + " line,";
     }
 
-    // remove the last comma and add a period
+    // Remove the last comma and add a period instead.
     exitsString = exitsString.substring(0, exitsString.length() - 1) + ".";
 
+    // Return the description with the items and exits.
     return description + itemsString + exitsString;
   }
 
@@ -82,22 +87,21 @@ public class Station {
   }
 
   /**
-   * Return the station that is reached if we go in direction
-   * "direction" with line "line". If there is no station in that direction, return null.
-   * 
+   * Return the station that is reached if we go in direction "direction" with
+   * line "line". If there is no station in that direction, return null.
    * @param direction The exit's direction.
    * @param line The exit's specific line.
    * @return The station in the given direction, or null if it doesn't exist.
    */
   public Station getExit(String direction, String line) {
+    // We want direction and line to be case-insensitive.
     return exits.get(new SimpleEntry<>(direction.toLowerCase(), line.toLowerCase()));
   }
 
   /**
-   * Return the station that is reached if we go in direction or line "word".
-   * If there is no station in that direction or there are more than one
-   * possible ways, return null.
-   * 
+   * Return the station that is reached if we go in either a direction or a line
+   * when "word" is interpreted as such. If there is no station in that direction
+   * or there are more than one possible ways, return null.
    * @param word The exit's direction or line to be interpreted.
    * @return The station in the given way, or null if it doesn't exist or cannot be determined.
    */

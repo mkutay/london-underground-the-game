@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
+ * This class is the Parser class of the "London Underground" application.
+ * "London Underground" is a simple, text based adventure game that was
+ * inspired by the stations found in Central London.
+ * 
  * This parser reads user input and tries to interpret it as an "Adventure"
  * command. Every time it is called it reads a line from the terminal and
  * tries to interpret the line as each word as a parameter. It returns the command
@@ -37,7 +41,7 @@ public class Parser  {
 
     inputLine = reader.nextLine();
 
-    // Find each word from the line and add them to the list.
+    // Find each word from the read line and add them to the list.
     try (Scanner tokenizer = new Scanner(inputLine)) {
       while (tokenizer.hasNext()) {
         words.add(tokenizer.next()); // get the next word
@@ -45,6 +49,7 @@ public class Parser  {
     }
 
     if (words.isEmpty()) {
+      // If the user entered nothing, create an empty command.
       return new Command(words);
     }
 

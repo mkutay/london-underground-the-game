@@ -4,18 +4,23 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
- * This class reads a file and returns its content as an ArrayList of Strings.
- * The file should be in the same directory as the program.
- * The readFile method of this class was adapted from https://www.w3schools.com/java/java_files_read.asp
+ * This class is the Reader class of the "London Underground" application.
+ * "London Underground" is a simple, text based adventure game that was
+ * inspired by the stations found in Central London.
  * 
- * @author W3Schools and Mehmet Kutay Bozkurt
+ * This class reads a file and returns its content as an ArrayList of
+ * Strings, seperated by new lines. The file should be in the same
+ * directory as the program.
+ * 
+ * @author Mehmet Kutay Bozkurt
  * @version 1.0
  */
 public class Reader {
   /**
-   * @return An ArrayList of Strings with the content of the file on each line.
+   * This method was taken from https://www.w3schools.com/java/java_files_read.asp.
+   * @return An ArrayList of Strings with the content of the file that is seperated by new lines.
    */
-  public ArrayList<String> readFile(String fileName) {
+  public static ArrayList<String> readFile(String fileName) {
     ArrayList<String> returnList = new ArrayList<>();
     try {
       File file = new File(fileName);
@@ -25,7 +30,7 @@ public class Reader {
       }
       scanner.close();
     } catch (FileNotFoundException e) {
-      // This exception should not happen in this program, but it is still handled.
+      // This exception should not happen in the game, but it is still handled.
       System.out.println("Couldn't read the " + fileName + " file.");
       e.printStackTrace();
     }
