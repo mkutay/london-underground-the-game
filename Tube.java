@@ -144,9 +144,12 @@ public class Tube {
   private void createCharacters() {
     Item oyster = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, "You have left the underground. Congratulations! You have won the game.");
 
-    Item money = new Item("Money", "Some money that you can use to buy things.", 1, null);
+    Item money = new Item("Money", "Some money that you can use to buy things.", 4, null);
 
-    Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 1, null);
+    Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 3, null);
+
+    Item blanket = new Item("Blanket", "A blanket that you can stay warm during the cold times.", 5, null);
+    getStation("Waterloo").getItems().addItem(blanket); // place the blanket in the Waterloo station
 
     ArrayList<Station> bankStationList = new ArrayList<>();
     bankStationList.add(getStation("Bank"));
@@ -158,8 +161,8 @@ public class Tube {
     piccadillyStationList.add(getStation("Piccadilly Circus"));
     piccadillyStationList.add(getStation("Leicester Square"));
     piccadillyStationList.add(getStation("Covent Garden"));
-    Entry<Item, Item> exchangeHomeless = new SimpleEntry<Item, Item>(null, money);
-    Character homeless = new Character("Homeless", "I see that you are lost on the underground. Take this money. It may help you leave the station.", piccadillyStationList, exchangeHomeless);
+    Entry<Item, Item> exchangeHomeless = new SimpleEntry<Item, Item>(blanket, money);
+    Character homeless = new Character("Homeless", "I see that you are lost on the underground and I am cold now. I see the blanket you're holding. I would give you money for it.", piccadillyStationList, exchangeHomeless);
     characters.add(homeless);
 
     ArrayList<Station> candyManStation = new ArrayList<>();

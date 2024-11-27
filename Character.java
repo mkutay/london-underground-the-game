@@ -36,10 +36,7 @@ public class Character {
 
     inventory = new Inventory(Integer.MAX_VALUE); // characters can have unlimited items
     currentStation = allowedStations.get(0);
-
-    if (exchange != null) {
-      inventory.addItem(exchange.getValue()); // add the value item to the inventory
-    }
+    inventory.addItem(exchange.getValue()); // add the "value" of the pair to the inventory
   }
 
   /**
@@ -51,24 +48,16 @@ public class Character {
 
   /**
    * Exchange an item with the character.
-   * @param item The item that the player gives the character, can be null.
+   * @param item The item that the player gives the character.
    * @return The item that the character gives in exchange, null if the exchange does not happen.
    */
   public Item exchangeItem(Item item) {
-    if (item == null) {
-      if (exchange.getKey() == null) {
-        inventory.removeItem(exchange.getValue());
-        return exchange.getValue();
-      }
+    if (!item.equals(exchange.getKey())) {
       return null;
-    } else {
-      if (!item.equals(exchange.getKey())) {
-        return null;
-      }
-      inventory.addItem(item);
-      inventory.removeItem(exchange.getValue());
-      return exchange.getValue();
     }
+    inventory.addItem(item);
+    inventory.removeItem(exchange.getValue());
+    return exchange.getValue();
   }
 
   /**

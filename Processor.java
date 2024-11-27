@@ -216,7 +216,6 @@ public class Processor {
 
   /**
    * Execute the "talk" command, allowing the player to talk to a character.
-   * @note If the character gives an item to the player, it will be added to the player's inventory.
    * @param command The talk command to be processed.
    * @return The output of the command.
    */
@@ -228,16 +227,9 @@ public class Processor {
       return "There is no character with the name " + characterName + ".";
     }
 
-    Item givenItem = character.exchangeItem(null);
     String returnString = character.getDialogue();
 
-    if (givenItem != null) {
-      // Add the item to the player's inventory if the character straight up gives an item to the player.
-      player.getInventory().addItem(givenItem);
-      returnString += "\n\nYou have received " + givenItem.getName() + " from " + character.getName() + ".";
-    }
-
-    return returnString;
+    return character.getName() + ": " + returnString;
   }
 
   /**
