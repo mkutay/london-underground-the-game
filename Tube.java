@@ -33,10 +33,6 @@ public class Tube {
     createStations();
     connectStations();
     createItems();
-
-    // Find and place the blanket in the Waterloo station.
-    getStation("Waterloo").getItems().addItem(getItem("Blanket"));
-
     createCharacters();
   }
   
@@ -186,14 +182,19 @@ public class Tube {
    */
   private void createItems() {
     ArrayList<String> itemsFile = Reader.readFile("items.txt");
-    for (int i = 0; i < itemsFile.size(); i += 5) {
+    for (int i = 0; i < itemsFile.size(); i += 6) {
       String name = itemsFile.get(i);
       String description = itemsFile.get(i + 1);
       int weight = Integer.parseInt(itemsFile.get(i + 2));
       String effectDialogue = itemsFile.get(i + 3);
       // if the effectDialogue is "null", set it to actual null:
       effectDialogue = effectDialogue.equals("null") ? null : effectDialogue;
+      Station station = getStation(itemsFile.get(i + 4));
       items.add(new Item(name, description, weight, effectDialogue));
+      if (station != null) {
+        // if the item is stated to be added to a station, then add the item to that station.
+        station.getItems().addItem(items.get(items.size() - 1));
+      }
     }
   }
 

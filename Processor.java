@@ -37,7 +37,8 @@ public class Processor {
 
     if (command.getWord(0) == null) {
       // If the user enters nothing or given command is not in ValidCommands
-      System.out.println("I don't know what you mean. You might have entered it as an incorrect format. Please enter again or try typing \"help\" for more information.");
+      System.out.println("I don't know what you mean. You might have entered the command in an incorrect format. Please enter again or try typing \"help\" for more information.");
+      return false;
     }
 
     String commandWord = command.getWord(0).toLowerCase();

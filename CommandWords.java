@@ -53,7 +53,11 @@ public class CommandWords {
    * @return The description of the command, or null if it doesn't exist.
    */
   public String getCommandDescription(String commandName) {
-    return validCommands.get(commandName).getDescription();
+    ValidCommand command = validCommands.get(commandName);
+    if (command == null) {
+      return null;
+    }
+    return command.getDescription();
   }
 
   /**

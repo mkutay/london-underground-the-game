@@ -4,14 +4,20 @@ Bank
 null
 null
 
+Staff
+Did you know that you can take the Waterloo & City line at Bank station to teleport to a random station on the underground?
+Holborn
+null
+null
+
 Homeless
 I see that you are lost on the underground and I am cold now. I see the blanket you're holding. I would give you money for it.
 Holborn,Piccadilly Circus,Leicester Square,Covent Garden
 Blanket
 Money
 
-CandyMan
-Hey I am CandyMan! Would you like to buy some very reasonably priced candy?
+CandySeller
+Hey I am CandySeller! Would you like to buy some very reasonably priced candy?
 Oxford Circus
 Money
 Candy
