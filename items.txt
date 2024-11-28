@@ -1,0 +1,19 @@
+Oyster
+Your Oyster card. You need this to leave the underground.
+1
+You have left the underground. Congratulations! You have won the game.
+
+Money
+Some money that you can use to buy things.
+4
+null
+
+Candy
+Some candy that you can eat or give to somebody.
+3
+null
+
+Blanket
+A blanket that you can stay warm during the cold times.
+5
+null

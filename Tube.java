@@ -1,6 +1,7 @@
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import java.util.Arrays;
 
 /**
  * This class is the Tube class of the "The London Underground" application.
@@ -18,6 +19,7 @@ import java.util.Map.Entry;
 public class Tube {
   private ArrayList<Station> stations; // stores all of the stations on the underground
   private ArrayList<Character> characters; // stores characters
+  private ArrayList<Item> items; // list of all of the items
   
   /**
    * Constructor - Initialise the tube by creating the stations and linking them together.
@@ -26,10 +28,16 @@ public class Tube {
   public Tube() {
     stations = new ArrayList<Station>();
     characters = new ArrayList<>();
+    items = new ArrayList<>();
 
     createStations();
     connectStations();
-    createCharactersAndItems();
+    createItems();
+
+    // Find and place the blanket in the Waterloo station.
+    getStation("Waterloo").getItems().addItem(getItem("Blanket"));
+
+    createCharacters();
   }
   
   /**
@@ -156,45 +164,59 @@ public class Tube {
   }
 
   /**
-   * Create the characters in the game and place them at one of the stations.
-   * Additionally, create the items that the characters will have/need.
-   * @note As new objects are created and their addresses are inserted into some place,
-   * we don't actually lose any data here.
+   * Get the item with the given name.
+   * @param name The name of the item.
+   * @return The item with the given name, null if not found.
+   * @note This method is used to get items when creating characters.
    */
-  private void createCharactersAndItems() {
-    Item oyster = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, "You have left the underground. Congratulations! You have won the game.");
-    Item money = new Item("Money", "Some money that you can use to buy things.", 4, null);
-    Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 3, null);
-    Item blanket = new Item("Blanket", "A blanket that you can stay warm during the cold times.", 5, null);
-    getStation("Waterloo").getItems().addItem(blanket); // place the blanket in the Waterloo station
+  private Item getItem(String name) {
+    name = name.toLowerCase(); // make the search case-insensitive
+    for (Item item : items) {
+      if (item.getName().toLowerCase().equals(name)) {
+        return item;
+      }
+    }
+    return null;
+  }
 
-    ArrayList<Station> bankStationList = new ArrayList<>();
-    bankStationList.add(getStation("Bank"));
-    Character staff = new Character("Staff", "Did you know that you can take the Waterloo & City line at Bank station to teleport to a random station on the underground?", bankStationList, null);
-    characters.add(staff);
+  /**
+   * Create the items in the game by reading from the "items.txt" file.
+   * All of the items in the game are stored in the "items" list.
+   * The items are created with their name, description, weight, and effect dialogue.
+   */
+  private void createItems() {
+    ArrayList<String> itemsFile = Reader.readFile("items.txt");
+    for (int i = 0; i < itemsFile.size(); i += 5) {
+      String name = itemsFile.get(i);
+      String description = itemsFile.get(i + 1);
+      int weight = Integer.parseInt(itemsFile.get(i + 2));
+      String effectDialogue = itemsFile.get(i + 3);
+      // if the effectDialogue is "null", set it to actual null:
+      effectDialogue = effectDialogue.equals("null") ? null : effectDialogue;
+      items.add(new Item(name, description, weight, effectDialogue));
+    }
+  }
 
-    ArrayList<Station> piccadillyStationList = new ArrayList<>();
-    piccadillyStationList.add(getStation("Holborn"));
-    piccadillyStationList.add(getStation("Piccadilly Circus"));
-    piccadillyStationList.add(getStation("Leicester Square"));
-    piccadillyStationList.add(getStation("Covent Garden"));
-    Entry<Item, Item> exchangeHomeless = new SimpleEntry<Item, Item>(blanket, money);
-    Character homeless = new Character("Homeless", "I see that you are lost on the underground and I am cold now. I see the blanket you're holding. I would give you money for it.", piccadillyStationList, exchangeHomeless);
-    characters.add(homeless);
-
-    ArrayList<Station> candyManStation = new ArrayList<>();
-    candyManStation.add(getStation("Oxford Circus"));
-    Entry<Item, Item> exchangeCandyMan = new SimpleEntry<Item, Item>(money, candy);
-    Character candyMan = new Character("CandyMan", "Hey I am CandyMan! Would you like to buy some very reasonably priced candy?", candyManStation, exchangeCandyMan);
-    characters.add(candyMan);
-
-    ArrayList<Station> districtStationList = new ArrayList<>();
-    districtStationList.add(getStation("Embankment"));
-    districtStationList.add(getStation("Temple"));
-    districtStationList.add(getStation("Blackfriars"));
-    districtStationList.add(getStation("Bank"));
-    Entry<Item, Item> exchangeChild = new SimpleEntry<Item, Item>(candy, oyster);
-    Character child = new Character("Child", "Hey, I want some candy! Do you have some candy?", districtStationList, exchangeChild);
-    characters.add(child);
+  /**
+   * Create the characters in the game by reading from the "characters.txt" file,
+   * and place them at one of the stations.
+   * The characters are created with their name, dialogue, allowed stations, and exchange items.
+   */
+  private void createCharacters() {
+    ArrayList<String> charactersFile = Reader.readFile("characters.txt");
+    for (int i = 0; i < charactersFile.size(); i += 6) {
+      String name = charactersFile.get(i);
+      String dialogue = charactersFile.get(i + 1);
+      Item exchangeKey = getItem(charactersFile.get(i + 3));
+      Item exchangeValue = getItem(charactersFile.get(i + 4));
+      Entry<Item, Item> exchange = (exchangeKey == null || exchangeValue == null ? null : new SimpleEntry<>(exchangeKey, exchangeValue));
+      // split the station names by commas:
+      ArrayList<String> allowedStationNames = new ArrayList<>(Arrays.asList(charactersFile.get(i + 2).split(",")));
+      ArrayList<Station> allowedStations = new ArrayList<>();
+      for (String stationName : allowedStationNames) {
+        allowedStations.add(getStation(stationName));
+      }
+      characters.add(new Character(name, dialogue, allowedStations, exchange));
+    }
   }
 }
