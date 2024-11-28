@@ -35,35 +35,6 @@ public class Tube {
     createItems();
     createCharacters();
   }
-  
-  /**
-   * Create all the stations after reading from the file "stations.txt".
-   * Add the "Random" station at the end of the list, which is used to transport
-   * the player to a random station.
-   */
-  private void createStations() {
-    ArrayList<String> stationsFile = Reader.readFile("stations.txt");
-    for (int i = 0; i < stationsFile.size(); i += 2) {
-      Station station = new Station(stationsFile.get(i), stationsFile.get(i + 1));
-      stations.add(station);
-    }
-    // The "Random" station wouldn't be seen by the player, it is used to ease the implementation of the teleportation feature.
-    stations.add(new Station("You are now being transported to a random station on the tube.", "Random"));
-  }
-
-  /**
-   * Link the station's exits together by reading from the file "connections.txt".
-   * Also link the "Random" station to the Bank station as the teleportation feature, 
-   * which the player will be able to use by just taking the Waterloo&City line.
-   */
-  private void connectStations() {
-    ArrayList<String> connectionsFile = Reader.readFile("connections.txt");
-    for (int i = 0; i < connectionsFile.size(); i += 6) {
-      setConnection(connectionsFile.get(i), connectionsFile.get(i + 1), connectionsFile.get(i + 2), connectionsFile.get(i + 3), connectionsFile.get(i + 4));
-    }
-
-    setConnection("Bank", "Random", "Waterloo&City", "Random", "Random");
-  }
 
   /**
    * Set the connection between two stations.
@@ -219,5 +190,34 @@ public class Tube {
       }
       characters.add(new Character(name, dialogue, allowedStations, exchange));
     }
+  }
+
+  /**
+   * Create all the stations after reading from the file "stations.txt".
+   * Add the "Random" station at the end of the list, which is used to transport
+   * the player to a random station.
+   */
+  private void createStations() {
+    ArrayList<String> stationsFile = Reader.readFile("stations.txt");
+    for (int i = 0; i < stationsFile.size(); i += 2) {
+      Station station = new Station(stationsFile.get(i), stationsFile.get(i + 1));
+      stations.add(station);
+    }
+    // The "Random" station wouldn't be seen by the player, it is used to ease the implementation of the teleportation feature.
+    stations.add(new Station("You are now being transported to a random station on the tube.", "Random"));
+  }
+
+  /**
+   * Link the station's exits together by reading from the file "connections.txt".
+   * Also link the "Random" station to the Bank station as the teleportation feature, 
+   * which the player will be able to use by just taking the Waterloo&City line.
+   */
+  private void connectStations() {
+    ArrayList<String> connectionsFile = Reader.readFile("connections.txt");
+    for (int i = 0; i < connectionsFile.size(); i += 6) {
+      setConnection(connectionsFile.get(i), connectionsFile.get(i + 1), connectionsFile.get(i + 2), connectionsFile.get(i + 3), connectionsFile.get(i + 4));
+    }
+
+    setConnection("Bank", "Random", "Waterloo&City", "Random", "Random");
   }
 }

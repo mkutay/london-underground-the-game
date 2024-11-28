@@ -59,7 +59,6 @@ public class Game {
    * @return True if the command ends the game, false otherwise.
    */
   private boolean processCommand(Command command) {
-    boolean isEnded = processor.processCommand(command);
-    return isEnded;
+    return processor.processCommand(command); // is ended?
   }
 }

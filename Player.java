@@ -44,6 +44,7 @@ public class Player {
    */
   public boolean goBack() {
     if (backStack.size() == 1) {
+      // The player is at the starting station so cannot go back any further.
       return false;
     }
     backStack.pop();
