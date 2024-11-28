@@ -1,6 +1,6 @@
 /**
- * This class is the main class of the "London Underground" application. 
- * "London Underground" is a simple, text based adventure game that was
+ * This class is the main class of the "The London Underground" application. 
+ * "The London Underground" is a simple, text based adventure game that was
  * inspired by the stations found in Central London. Players can walk
  * around some of the underground stations in the city, pick up
  * and drop items, and try to find a way out of the stations by

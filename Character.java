@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 /**
- * This class represents a Character in the "London Underground" game.
- * "London Underground" is a text-based adventure game that was
+ * This class represents a Character in the "The London Underground" game.
+ * "The London Underground" is a text-based adventure game that was
  * inspired by the stations found in Central London.
  *
  * A character has a name, a dialogue, an inventory, a current station,

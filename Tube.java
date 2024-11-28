@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 /**
- * This class is the Tube class of the "London Underground" application.
- * "London Underground" is a simple, text based adventure game that was
+ * This class is the Tube class of the "The London Underground" application.
+ * "The London Underground" is a simple, text based adventure game that was
  * inspired by the stations found in Central London.
  * 
  * This class represents the tube map. It creates all the stations and
@@ -29,7 +29,7 @@ public class Tube {
 
     createStations();
     connectStations();
-    createCharacters();
+    createCharactersAndItems();
   }
   
   /**
@@ -121,6 +121,7 @@ public class Tube {
     name = name.toLowerCase(); // make the search case-insensitive
     for (Character character : characters) {
       if (character.getName().toLowerCase().equals(name)) {
+        // Return the character if the name matches.
         return character;
       }
     }
@@ -138,12 +139,16 @@ public class Tube {
   }
 
   /**
-   * @return The description of the characters in the station, empty string if there are no characters.
+   * @return The description of the characters in the player's current station,
+   * empty string if there are no characters.
+   * @param playerCurrentStation The station where the player is currently at.
    */
   public String getCharactersDescription(Station playerCurrentStation) {
     String characterString = "";
+    // Go through every character and check if they are at the player's current station.
     for (Character character : characters) {
       if (character.getCurrentStation().equals(playerCurrentStation)) {
+        // Add the character's name to the string if they are at the same station as the player.
         characterString += "\n  " + character.getName();
       }
     }
@@ -156,7 +161,7 @@ public class Tube {
    * @note As new objects are created and their addresses are inserted into some place,
    * we don't actually lose any data here.
    */
-  private void createCharacters() {
+  private void createCharactersAndItems() {
     Item oyster = new Item("Oyster", "Your Oyster card. You need this to leave the underground.", 1, "You have left the underground. Congratulations! You have won the game.");
     Item money = new Item("Money", "Some money that you can use to buy things.", 4, null);
     Item candy = new Item("Candy", "Some candy that you can eat or give to somebody.", 3, null);

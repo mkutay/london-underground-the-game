@@ -1,8 +1,8 @@
 import java.util.HashMap;
 
 /**
- * This class is the CommandWords class of the "London Underground"
- * application. "London Underground" is a simple, text based adventure
+ * This class is the CommandWords class of the "The London Underground"
+ * application. "The London Underground" is a simple, text based adventure
  * game that was inspired by the stations found in Central London.
  * 
  * This class holds an enumeration of all command words known in the game.

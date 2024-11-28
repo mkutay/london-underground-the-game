@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * This class is the Parser class of the "London Underground" application.
- * "London Underground" is a simple, text based adventure game that was
+ * This class is the Parser class of the "The London Underground" application.
+ * "The London Underground" is a simple, text based adventure game that was
  * inspired by the stations found in Central London.
  * 
  * This parser reads user input and tries to interpret it as an "Adventure"

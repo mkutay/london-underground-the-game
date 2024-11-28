@@ -4,8 +4,8 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 /**
- * This class is the Station class of the "London Underground" application. 
- * "London Underground" is a simple, text based adventure game that was
+ * This class is the Station class of the "The London Underground" application. 
+ * "The London Underground" is a simple, text based adventure game that was
  * inspired by the stations found in Central London.
  * 
  * A "Station" represents one location in the scenery of the game. It is 
@@ -61,8 +61,8 @@ public class Station {
     for (Entry<String, String> exit : exits.keySet()) {
       // "key" is the direction, "value" is the line:
       exitsString += "\n  " +
-				capitalizeFirstLetter(exit.getKey()) + " " +
-				capitalizeFirstLetter(exit.getValue()) + " line,";
+        capitaliseFirstLetter(exit.getKey()) + " " +
+        capitaliseFirstLetter(exit.getValue()) + " line,";
     }
 
     // Remove the last comma and add a period instead.
@@ -108,9 +108,11 @@ public class Station {
   public Station getExit(String word) {
     Station returnStation = null;
     for (Entry<String, String> exit : exits.keySet()) {
+      // Either interpret the word as a "direction" or a "line".
       if (exit.getKey().equals(word.toLowerCase()) || exit.getValue().equals(word.toLowerCase())) {
         if (returnStation != null) {
-          // if there is more than one possible exit to take with the given information, return null
+          // If there is more than one possible exit to take with the given information, return null
+          // as we cannot determine which one to take.
           return null;
         }
         returnStation = exits.get(exit);
@@ -124,16 +126,16 @@ public class Station {
    * @return A random exit from the exits of this station.
    */
   public Station getRandomExit() {
-    Random generator = new Random();
+    Random generator = new Random(); // create a random stream
     Object[] values = exits.values().toArray();
     return (Station) values[generator.nextInt(values.length)];
   }
 
   /**
-   * Capitalize the first letter of a given string.
+   * Capitalise the first letter of a given string.
    * Used to make the output more readable.
    */
-	private String capitalizeFirstLetter(String str) {
+	private String capitaliseFirstLetter(String str) {
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 }

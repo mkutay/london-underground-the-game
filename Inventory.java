@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 /**
- * This is the Inventory class of the "London Underground" application.
- * "London Underground" is a simple text-based adventure game that was
+ * This is the Inventory class of the "The London Underground" application.
+ * "The London Underground" is a simple text-based adventure game that was
  * inspired by the stations found in Central London.
  * 
  * This Inventory class can represent the inventory of the player,

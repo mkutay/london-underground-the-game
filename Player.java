@@ -1,8 +1,8 @@
 import java.util.Stack;
 
 /**
- * This is the Player class of the "London Underground" application.
- * "London Underground" is a simple text-based adventure game that was
+ * This is the Player class of the "The London Underground" application.
+ * "The London Underground" is a simple text-based adventure game that was
  * inspired by the stations found in Central London.
  * 
  * This is the Player class representing the player in the game. The player

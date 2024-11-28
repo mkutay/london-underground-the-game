@@ -4,8 +4,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
- * This class is the Reader class of the "London Underground" application.
- * "London Underground" is a simple, text based adventure game that was
+ * This class is the Reader class of the "The London Underground" application.
+ * "The London Underground" is a simple, text based adventure game that was
  * inspired by the stations found in Central London.
  * 
  * This class reads a file and returns its content as an ArrayList of

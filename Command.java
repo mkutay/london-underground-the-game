@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 /**
- * This Command class is part of the "London Underground" application.
- * "London Underground" game is a simple, text based adventure game that was
+ * This Command class is part of the "The London Underground" application.
+ * "The London Underground" game is a simple, text based adventure game that was
  * inspired by the stations found in Central London.
  * 
  * This class holds information about a command that was entered by the user. A
